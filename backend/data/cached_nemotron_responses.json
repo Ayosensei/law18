@@ -13,5 +13,35 @@
     "agent": "ConsistencyEvaluator",
     "incident_id": "incident-a",
     "response": "Arbitration Finding: Overturn warranted. The Clear & Obvious threshold was breached because the handling was deliberate, unambiguous, and occurred on a live ball. 98.4% statistical parity with the Mings precedent dictates a mandatory penalty kick. Precedent Deviation Index: 92%."
+  },
+  {
+    "agent": "VARAdvocate",
+    "incident_id": "incident-b",
+    "response": "Advocate Position: Defend on-field call. Goalkeeper Musso executed a legitimate clearance attempt. Contact resulted from mutual forward aerial momentum in a 50/50 contested challenge, falling within referee Kov\u00e1cs' discretionary tolerance for physical penalty-box contest."
+  },
+  {
+    "agent": "RulesAuditor",
+    "incident_id": "incident-b",
+    "response": "Audit Objection: IFAB Law 12.3 mandates a straight red card for Serious Foul Play: 'A tackle or challenge that endangers the safety of an opponent must be sanctioned as serious foul play.' Musso's studs contacted Ferm\u00edn's forehead at 1.82m elevation, causing immediate facial trauma. 91.8% parity with Sadio Man\u00e9 vs Ederson (2017) dictates mandatory expulsion regardless of intent."
+  },
+  {
+    "agent": "ConsistencyEvaluator",
+    "incident_id": "incident-b",
+    "response": "Arbitration Finding: Critical VAR failure. Player safety endangerment is absolute under Law 12.3 and cannot be mitigated by playing the ball. Man\u00e9 precedent parity confirms a mandatory On-Field Review and red card. Precedent Deviation Index: 88%."
+  },
+  {
+    "agent": "VARAdvocate",
+    "incident_id": "incident-c",
+    "response": "Advocate Position: Defend on-field dismissal. Referee Turpin correctly identified that Eric Garc\u00eda was the last outfield defender when contact occurred outside the box, fulfilling DOGSO requirements under Law 12.3."
+  },
+  {
+    "agent": "RulesAuditor",
+    "incident_id": "incident-c",
+    "response": "Audit Objection: Meterless World Model metrics show covering defender Cubars\u00ed within 3.2m of the recovery cone and goalkeeper Joan Garc\u00eda anticipating the loose touch. Contact was an accidental knee clip. Under modern UEFA instructions, DOGSO requires unequivocal denial of an obvious opportunity, making this an excessive disciplinary sanction."
+  },
+  {
+    "agent": "ConsistencyEvaluator",
+    "incident_id": "incident-c",
+    "response": "Arbitration Finding: Disciplinary Over-Sanction. While referee Turpin's sightline was clean, historical precedents indicate an intervention threshold of only 45% PDI, pointing to referee profile strictness bias rather than an indisputable red card offense. Precedent Deviation Index: 45%."
   }
 ]
