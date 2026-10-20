@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { IncidentFullData, IncidentId } from '@/types/incident';
+import { AlertCircle, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 interface IncidentSelectorProps {
   incidents: IncidentFullData[];
@@ -15,47 +16,54 @@ export const IncidentSelector: React.FC<IncidentSelectorProps> = ({
   onSelect,
 }) => {
   return (
-    <div className="w-full bg-panel-base border-b border-technical py-2 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto pb-1 sm:pb-0">
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wider mr-1 hidden lg:inline-block">
-            Benchmark Case:
-          </span>
+    <div className="w-full bg-panel-base border-b border-technical py-3 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
+        {/* Label */}
+        <div className="text-xs text-slate-400 font-medium">
+          Select a controversial match incident to review:
+        </div>
+
+        {/* Buttons / Cards */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
           {incidents.map((incident) => {
             const isActive = incident.id === selectedId;
+            const isCritical = incident.verdict.tier === 'CRITICAL_BREACH';
+            const isSevere = incident.verdict.tier === 'SEVERE_ERROR';
+
             return (
               <button
                 key={incident.id}
                 onClick={() => onSelect(incident.id)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs transition-all whitespace-nowrap cursor-pointer text-left ${
                   isActive
-                    ? 'bg-panel-elevated text-slate-100 border border-sky-500/50 shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-panel-elevated/50 border border-transparent'
+                    ? 'bg-sky-500/15 text-white border border-sky-500/40 shadow-sm font-semibold'
+                    : 'bg-panel-elevated/70 text-slate-300 hover:text-white hover:bg-panel-elevated border border-technical'
                 }`}
               >
-                <span
-                  className={`w-1.5 h-1.5 rounded-full ${
-                    incident.verdict.tier === 'CRITICAL_BREACH'
-                      ? 'bg-rose-500'
-                      : incident.verdict.tier === 'SEVERE_ERROR'
-                      ? 'bg-rose-400'
-                      : 'bg-amber-400'
-                  }`}
-                />
-                <span className="font-medium">{incident.tabLabel}</span>
+                {/* Status indicator icon */}
+                {isCritical ? (
+                  <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
+                ) : isSevere ? (
+                  <span className="w-2 h-2 rounded-full bg-rose-400 shrink-0" />
+                ) : (
+                  <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
+                )}
+
+                <div className="flex flex-col">
+                  <span className="font-semibold text-slate-100">{incident.tabLabel}</span>
+                  <span className="text-[10px] text-slate-400 font-normal">
+                    {incident.matchHeader.homeTeam.name} vs {incident.matchHeader.awayTeam.name}
+                  </span>
+                </div>
+
                 {isActive && (
-                  <span className="text-[10px] px-1 rounded bg-sky-500/10 text-sky-400 font-mono">
-                    ACTIVE
+                  <span className="ml-1 text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 font-semibold border border-sky-500/30">
+                    Selected
                   </span>
                 )}
               </button>
             );
           })}
-        </div>
-
-        <div className="text-[11px] font-mono text-slate-500 hidden sm:flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>IFAB 2025/26 Codification</span>
         </div>
       </div>
     </div>

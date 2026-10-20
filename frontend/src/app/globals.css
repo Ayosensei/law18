@@ -2,8 +2,8 @@
 
 @layer base {
   :root {
-    --background: #080a0f;
-    --foreground: #f8fafc;
+    --background: #0b111e;
+    --foreground: #f1f5f9;
   }
 
   body {
@@ -11,57 +11,58 @@
     color: var(--foreground);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 }
 
-/* Custom Sports Authority Utility Classes */
+/* Sports Broadcast Utility Classes */
 .bg-pitch-canvas {
-  background-color: #080a0f;
+  background-color: #0b111e;
 }
 
 .bg-panel-base {
-  background-color: #0f141e;
+  background-color: #121a29;
 }
 
 .bg-panel-elevated {
-  background-color: #161d2b;
+  background-color: #182236;
 }
 
 .bg-panel-subtle {
-  background-color: #1f293d;
+  background-color: #1e2b44;
 }
 
 .bg-pitch-turf {
-  background-color: #0a131c;
+  background-color: #0d2818;
 }
 
 .border-technical {
-  border-color: #1b2433;
+  border-color: #212e45;
 }
 
 .border-technical-strong {
-  border-color: #2c3a52;
+  border-color: #334464;
 }
 
 .border-active-cyan {
   border-color: #38bdf8;
 }
 
-/* Crisp Technical Scrollbar */
+/* Crisp Sports Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #080a0f;
+  background: #0b111e;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f293d;
-  border-radius: 3px;
+  background: #212e45;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2c3a52;
+  background: #334464;
 }
