@@ -1,0 +1,11 @@
+# Law18 — Cursor Officiating Agent Rules
+
+You are working on Law18, an agentic officiating consistency intelligence engine for the Open Agent Hackathon 2026 (Track 2: The Agent That Can Explain Why).
+
+## Project Guidelines
+1. **Zero AI Slop Rule**: No generic purple/pink gradients, conversational chatbot bubbles, or robotic marketing text. Follow the minimalist sports telemetry aesthetic in `docs/DESIGN.md`.
+2. **Data Consistency**: Never hallucinate player names, coordinates, or statistics. All UI data is strictly codified in `docs/DESIGN.md` and `frontend/src/data/incidentsData.ts`.
+3. **Architecture**:
+   - Frontend: Next.js 14 App Router, TypeScript, Tailwind CSS (`frontend/`).
+   - Backend: FastAPI, LangGraph, Pydantic v2 (`backend/`).
+   - Sponsors: Zetaris (Virtual SQL fabric), Meterless (World Model, H-MEM, Markovian engine), NVIDIA Nemotron (Inference).
