@@ -1,21 +1,31 @@
 # Law18 — Team Collaboration & Workflow Guide
-**Sensei (Lead / Frontend & Fullstack) & DuroT (Backend & Agent Graph)**
+**Sensei (Frontend Lead & Integrations) & DuroT (Backend & Agent Graph Specialist)**
+
+> **Reference Documents**:
+> * Specification & Schemas: [`docs/PROJECT_SPEC.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/PROJECT_SPEC.md)
+> * Visual Identity & Tokens: [`docs/DESIGN.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)
+> * Agent State, Roles & Prompts: [`docs/AGENTS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/AGENTS.md)
+> * Sensei's Task Playbook: [`docs/TASKS_SENSEI.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_SENSEI.md)
+> * DuroT's Task Playbook: [`docs/TASKS_DUROT.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_DUROT.md)
 
 ---
 
 ## 1. Operating Rules for Parallel Development
 
-To work fast without stepping on each other's toes or blocking progress:
+To work at lightning speed without stepping on each other's toes or blocking progress:
 
-1. **Strict Contract First**: Both team members code against `docs/PROJECT_SPEC.md`.
+1. **Strict Contract First**: Both team members code against [`docs/PROJECT_SPEC.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/PROJECT_SPEC.md). DuroT defines the exact Pydantic/OpenAPI contracts, and Sensei uses identical TypeScript interfaces.
 2. **Mock-Driven Decoupling**:
-   * Sensei does not wait for the Python backend to build the UI. A mock fixture file (`src/fixtures/mockIncidents.json` and `mockAuditResults.json`) will let Sensei build and test the full Sofascore-style interface immediately.
-   * DuroT builds the backend agents and tests against sample incident JSONs using automated tests (`pytest`) and `run.py --sample`.
-3. **Zero-Cost Constraint**:
+   * Sensei does not wait for the backend to complete before building the UI. A mock fixture layer (`src/fixtures/mockIncidents.ts` and `src/fixtures/mockAuditResults.ts`) enables immediate development and visual testing of the full Sofascore-style interface.
+   * DuroT builds the LangGraph nodes and tests against structured incident JSONs using automated test runners and `run.py --sample`.
+3. **Clear Boundary on Integrations**:
+   * **Sensei** authors the client connectors for **Zetaris**, **Meterless**, and **NVIDIA Nemotron** in `backend/app/integrations/`.
+   * **DuroT** calls these clean interfaces inside the LangGraph agent nodes.
+4. **Zero-Cost Constraint**:
    * No paid cloud databases.
    * LangGraph runs locally (`pip install langgraph`).
    * Next.js runs locally on port 3000; FastAPI runs locally on port 8000.
-   * Model calls use hackathon NVIDIA Nemotron free keys (with a deterministic mock fallback when testing offline).
+   * Model calls utilize free hackathon NVIDIA Nemotron credits with a deterministic local mock fallback for offline judge evaluation.
 
 ---
 
@@ -24,56 +34,70 @@ To work fast without stepping on each other's toes or blocking progress:
 ```text
 law18/
 ├── docs/                        # Architecture, specs & task playbooks
+│   ├── AGENTS.md
+│   ├── DESIGN.md
 │   ├── PROJECT_SPEC.md
-│   ├── TEAM_WORKFLOW.md
 │   ├── TASKS_SENSEI.md
-│   └── TASKS_DUROT.md
-├── backend/                     # DuroT's Domain (Python)
+│   ├── TASKS_DUROT.md
+│   └── TEAM_WORKFLOW.md
+├── backend/                     # Python 3.11+ Environment
 │   ├── app/
-│   │   ├── main.py              # FastAPI endpoints (/api/incidents, /api/audit)
-│   │   ├── graph/               # LangGraph state machine & agents
-│   │   │   ├── state.py         # Agent graph state definitions
-│   │   │   ├── triage.py        # Triage & extraction agent
-│   │   │   ├── retriever.py     # Zetaris query agent
-│   │   │   ├── advocate.py      # VAR Protocol defense agent
-│   │   │   ├── auditor.py       # IFAB Rules challenger agent
-│   │   │   ├── evaluator.py     # Meterless consistency evaluator
-│   │   │   └── synthesizer.py   # Report & Public Card writer
-│   │   ├── sponsor/
-│   │   │   ├── zetaris_client.py   # Zetaris connection & mock
-│   │   │   └── meterless_engine.py # H-MEM & World Model integration
-│   │   └── data/                # Precedents, IFAB text, sample incidents
-│   ├── logs/                    # JSONL execution traces
-│   ├── run.py                   # Programmatic CLI entry point for judges
+│   │   ├── main.py              # FastAPI endpoints (/api/incidents, /api/audit, /api/deliberate/stream)
+│   │   ├── schemas/             # DuroT: Pydantic v2 telemetry and audit schemas
+│   │   │   ├── telemetry.py
+│   │   │   └── deliberation.py
+│   │   ├── graph/               # DuroT: LangGraph state machine & agent nodes
+│   │   │   ├── state.py         # DeliberationState TypedDict
+│   │   │   ├── graph.py         # StateGraph builder and conditional edge routing
+│   │   │   └── nodes/
+│   │   │       ├── triage_fact_node.py
+│   │   │       ├── var_advocate_node.py
+│   │   │       ├── rules_auditor_node.py
+│   │   │       ├── consistency_evaluator_node.py
+│   │   │       └── kmi_synthesizer_node.py
+│   │   ├── integrations/        # Sensei: Sponsor & Core Integration layer
+│   │   │   ├── zetaris_client.py       # Zetaris virtual data fabric connector + SQLite fallback
+│   │   │   ├── meterless_world_model.py # Pitch spatial vector state
+│   │   │   ├── meterless_hmem.py       # Referee profile hierarchical memory
+│   │   │   ├── meterless_markovian.py  # Bounded VAR protocol carryover
+│   │   │   └── nvidia_client.py        # NVIDIA Nemotron LLM inference client
+│   │   └── data/                # DuroT: Precedents, IFAB laws, and 3 benchmark incident files
+│   │       ├── incidents/
+│   │       ├── precedents.json
+│   │       └── ifab_laws.json
+│   ├── logs/                    # JSONL execution traces (logs/trace-*.jsonl)
+│   ├── tests/                   # Automated pytest suite
+│   ├── run.py                   # DuroT: Programmatic CLI entry point for hackathon judges
 │   ├── requirements.txt
 │   └── Dockerfile
-├── frontend/                    # Sensei's Domain (Next.js 14/15, TS, Tailwind)
+├── frontend/                    # Sensei: Next.js 14, TypeScript, Tailwind
 │   ├── src/
-│   │   ├── app/                 # App Router (pages: /dashboard, /incident/[id])
-│   │   ├── components/          # Sofascore/FotMob design system components
-│   │   │   ├── MatchHeader.tsx
-│   │   │   ├── TimelineSlider.tsx
-│   │   │   ├── IncidentCard.tsx
+│   │   ├── app/                 # App Router (layout, page)
+│   │   ├── components/          # High-density sports telemetry UI components
+│   │   │   ├── TopCommandBar.tsx
+│   │   │   ├── PitchTelemetry2D.tsx
+│   │   │   ├── DeliberationChamber.tsx
+│   │   │   ├── PrecedentMatrixCard.tsx
 │   │   │   ├── ConsistencyGauge.tsx
-│   │   │   ├── DeliberationFeed.tsx
-│   │   │   └── PublicCardModal.tsx
+│   │   │   ├── RegulatoryDossierView.tsx
+│   │   │   └── PublicTransparencyCard.tsx
 │   │   ├── fixtures/            # Static mock data for zero-blocker UI dev
-│   │   └── lib/                 # API client connecting to port 8000
+│   │   ├── types/               # TypeScript interfaces matching backend schemas
+│   │   └── lib/                 # API client and SSE stream consumer
 │   ├── package.json
-│   └── tailwind.config.ts
-├── .env.example                 # Secrets template (no committed keys!)
+│   ├── tailwind.config.ts
+│   └── tsconfig.json
+├── hackathon-resources/         # Original rules, guides & sponsor briefs
+├── .gitignore
 └── README.md                    # Main submission README
 ```
 
 ---
 
-## 3. Daily Milestones (144-Hour Calendar)
+## 3. Communication & Integration Handshake
 
-| Day / Window | Sensei (Frontend & Integration) | DuroT (Backend & Agent Graph) | Shared Milestone |
-|---|---|---|---|
-| **Day 1 (Kickoff)** | Initialize Next.js project with Tailwind; create static mock incident fixtures. | Setup Python venv, LangGraph baseline, create incident JSON schemas. | Mock data contract signed off. |
-| **Day 2 (Core Build)** | Build Sofascore match timeline, header, and incident selector components. | Build `TriageAgent`, `ZetarisClient` (mock + live), and IFAB database schema. | Backend loads incidents; UI renders them statically. |
-| **Day 3 (Agent Loops)** | Build the Live Deliberation Feed UI (showing agent debate messages in real time). | Implement `VARAdvocate` vs `RulesAuditor` adversarial loop in LangGraph. | Agents debate in terminal; logs written to `logs/*.jsonl`. |
-| **Day 4 (Integration)** | Build Consistency Gauge, B2B Dossier viewer, and Public Card modal. | Wire `Meterless` H-MEM / World Model, add `SAMPLE_MODE=true` fallback. | Frontend connects to `POST http://localhost:8000/api/audit`. |
-| **Day 5 (Polish & Hardening)** | Polish responsive layout, dark theme accents, error toasts, and demo transitions. | Test `run.py` CLI, Docker build container, sanitize secrets, verify sample mode. | End-to-end run works with 1 command. |
-| **Day 6 (Submission)** | Draft slide deck visuals, capture UI screenshots. | Write technical section of README, confirm `metadata.json`. | Record 3-minute video demo & submit on HackOS! |
+* **Contract Changes**: Any schema modification to `backend/app/schemas/` must immediately be mirrored in `frontend/src/types/telemetry.ts`.
+* **Testing Protocol**:
+  1. DuroT runs `python run.py --incident pubill` and verifies trace output in `backend/logs/`.
+  2. Sensei verifies `npm run dev` renders the 2D pitch visualizer and connects to SSE streaming.
+  3. Combined end-to-end integration verified before git commits.

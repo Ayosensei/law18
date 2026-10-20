@@ -1,173 +1,247 @@
-# Law18 — Frontend Design System & UI Specification (`DESIGN.md`)
-**Sofascore / FotMob Sports Analytics Aesthetics & Dark-Mode Command Center**
+# Law18 — UI/UX Design System & Specification
+**Philosophy: Pure Sports Telemetry & Officiating Authority. Zero AI Slop.**
+
+> *"If it looks like a ChatGPT wrapper or an NFT dashboard, it has failed. It must look like Hawk-Eye, Opta, and UEFA VAR match operations built a mission-critical tool for sporting directors."*
 
 ---
 
-## 1. Design Vision & Philosophy
+## 1. The "Zero AI Slop" Manifesto
 
-**Law18 combines the live excitement of premier sports platforms (Sofascore, FotMob) with the forensic precision of a regulatory legal command center.**
+In sports analytics and high-stakes arbitration, credibility is everything. Most AI products fail because they look like toys: glowing purple gradients, floating cards, vague chatbot speech bubbles, and cheesy robotic copy.
 
-* **Theme**: Deep stadium night floodlights (`#0B0E14` pitch black with glowing neon accents).
-* **Speed & Responsiveness**: Immediate incident filtering, snappy tab switching, animated score dials, and real-time streaming deliberation feeds.
-* **Dual Persona Experience**:
-  * **Analyst / Referee Board Mode**: Dense, tabular, precedent-heavy data dossier with exact IFAB statutes.
-  * **Fan / Broadcast Mode**: High-contrast, clean, 3-bullet graphic cards ready for television lower-thirds or stadium jumbotrons.
+### The Strict Banned List:
+1. **NO Generic AI Gradients**: Banned across all buttons, cards, text, and backgrounds (`linear-gradient(to right, #8B5CF6, #EC4899)`, purple-to-indigo, neon glow halos).
+2. **NO Chatbot Conversational Interfaces**: No centered chat inputs, no "How can I help you today referee?", no avatar heads with smiling robots.
+3. **NO AI Buzzword Slop**: The copy must strictly reflect official IFAB, UEFA, and PGMOL terminology.
+   * **BANNED**: *"Empowering football with cognitive AI synergy"*, *"Our intelligent model thinks..."*, *"AI-generated insight"*, *"Delve"*, *"Unleash"*, *"Magic"*.
+   * **MANDATORY**: *"Key Match Incident (KMI)"*, *"Precedent Deviation Index (PDI)"*, *"IFAB Law 12.1 Compliance Check"*, *"Clear & Obvious Threshold"*, *"Spatial Telemetry Vector"*, *"Adversarial Deliberation Protocol"*, *"Historical Anchor Match"*.
+4. **NO Low-Density Spacing**: Avoid massive 64px padding and sparse empty cards. Follow high-density sports UI like Sofascore, FotMob, and Bloomberg Terminal: compact typography, tabular numbers, precise borders, and information-dense grids.
 
 ---
 
-## 2. Color System & Design Tokens
+## 2. Aesthetic Anchor & Moodboard
 
-### Core Color Palette
+* **Aesthetic**: Technical, institutional, broadcast-grade sports telemetry.
+* **Primary Visual References**:
+  * **FotMob & Sofascore**: Compact match headers, stat bars, live event timelines, clean player ratings.
+  * **Hawk-Eye Innovations & Piero Sports Graphics**: Vector pitch lines, player limb angle annotations, millimeter measurement calipers.
+  * **UEFA VAR Control Room Monitor**: Crisp black/zinc surfaces, amber/crimson/emerald status lamps, high-contrast timestamps, audio-waveform transcripts.
 
-```typescript
-// tailwind.config.ts extension
-export const law18Theme = {
-  colors: {
-    pitch: {
-      950: '#06080D', // Deepest background
-      900: '#0B0E14', // Base app background
-      850: '#121721', // Surface / container background
-      800: '#1A2232', // Elevated card surface
-      700: '#2A3447', // Subtle borders & dividers
-      600: '#3D4A63', // Hover state borders
-    },
-    accent: {
-      emerald: '#00E676', // Verified correct / Standard call
-      emeraldGlow: 'rgba(0, 230, 118, 0.2)',
-      amber: '#FFAB00',   // Marginal / Subjective grey-zone
-      amberGlow: 'rgba(255, 171, 0, 0.2)',
-      crimson: '#FF1744', // Blunder / Clear & Obvious Error
-      crimsonGlow: 'rgba(255, 23, 68, 0.25)',
-      cyan: '#00E5FF',    // Telemetry & spatial data points
-      varPurple: '#7C3AED', // VAR protocol badge & system highlights
-      uclBlue: '#001D4A',  // Champions league branding accent
-    },
-    text: {
-      primary: '#F8FAFC',
-      secondary: '#94A3B8',
-      muted: '#64748B',
-      highlight: '#FFFFFF',
-    }
-  }
-};
+---
+
+## 3. Color Palette & Design Tokens
+
+Every color in Law18 has an exact functional meaning derived from football refereeing (pitch grass, referee cards, pitchside monitor states).
+
+### 3.1 Surface & Neutral Tokens (Dark Mode First)
+We use cold technical slates and deep stadium charcoal—never muddy grays or purple-tinted blacks.
+
+| Token | Hex | Tailwind Utility | Purpose |
+|---|---|---|---|
+| `bg-stadium-pitch` | `#080A0E` | `bg-[#080A0E]` | Base canvas / global app background |
+| `bg-panel-base` | `#0F141C` | `bg-[#0F141C]` | Main panel / card surface |
+| `bg-panel-elevated` | `#161C26` | `bg-[#161C26]` | Hover states, active tabs, modal surfaces |
+| `bg-panel-subtle` | `#1D2433` | `bg-[#1D2433]` | Table row alternate, telemetry box background |
+| `border-technical` | `#263043` | `border-[#263043]` | Default 1px structural container borders |
+| `border-technical-strong` | `#3B4863` | `border-[#3B4863]` | Active container, focused input, highlighted section |
+
+### 3.2 Typography Tokens
+| Token | Hex | Purpose |
+|---|---|---|
+| `text-display-white` | `#F8FAFC` | Primary metrics, match titles, key verdicts (`text-slate-50`) |
+| `text-telemetry-primary` | `#E2E8F0` | Telemetry readouts, agent claims, statutory text (`text-slate-200`) |
+| `text-telemetry-secondary` | `#94A3B8` | Metadata, timestamps, referee names, pitch dimensions (`text-slate-400`) |
+| `text-telemetry-muted` | `#64748B` | Table headers, deactivated tabs, coordinates axis (`text-slate-500`) |
+
+### 3.3 Functional Officiating Signals
+Colors represent real football match decisions:
+
+| Signal | Hex | Usage in UI |
+|---|---|---|
+| **Pitch Grass Green** | `#10B981` | Law Compliance, Precedent Match, Low Deviation (<15%), Confirmed Correct Call |
+| **Yellow Card Amber** | `#F59E0B` | Under Deliberation, Caution Offence, Moderate Deviation (15%–40%), Subjective Threshold |
+| **Red Card Crimson** | `#EF4444` | Precedent Violation, High Deviation (>40%), DOGSO, Serious Foul Play, Reversed Call |
+| **VAR Cyan / Monitor Blue**| `#0284C7` | Active On-Field Review (OFR), Telemetry Tracking vectors, Hawk-Eye measure lines |
+| **Precedent Gold** | `#EAB308` | Historical Precedent Anchor citation, IFAB Rule clause callout |
+
+---
+
+## 4. Typography Specification
+
+To prevent any generic feel, typography is strictly divided into **Technical Data Font** and **Institutional Editorial Font**.
+
+1. **Telemetry & Numbers**: `JetBrains Mono` or `Geist Mono`
+   * *Used for*: Timestamps (`54:12`), Spatial Coordinates (`x: 88.4m, y: 14.2m`), Deviation Indices (`92.4%`), Law Clauses (`Law 12.1.b`), Velocity (`8.2 m/s`).
+   * *Style*: Tabular figures enabled (`font-mono tabular-nums tracking-tight`).
+2. **Interface & Narrative**: `Inter` or `Geist Sans`
+   * *Used for*: Match titles, team names, agent arguments, statutory summaries, dossier copy.
+   * *Style*: Clean, neutral sans-serif with geometric precision (`tracking-[-0.01em]`).
+
+---
+
+## 5. UI Layout & Component Anatomy
+
+The application layout follows a 3-column / stacked telemetry command-center layout:
+
+```
++----------------------------------------------------------------------------------------------------+
+| TOPBAR: Match Status Strip | Incident Selector (Dropdown) | PDI Metric Badge | Export Dossier Button |
++----------------------------------------------------+-----------------------------------------------+
+| LEFT PANEL (45% Width): INCIDENT TELEMETRY          | RIGHT PANEL (55% Width): COGNITION & AUDIT    |
+|                                                    |                                               |
+| 1. Match Header & On-Field Decision Context        | 1. Live Multi-Agent Deliberation Chamber      |
+|    - Fixture: FC Barcelona vs Atlético Madrid      |    - Real-time turn-based debate transcript   |
+|    - Minute: 54' | Referee: István Kovács          |    - [VAR Advocate] vs [Rules Auditor]        |
+|    - Call: No Penalty / No Review                  |    - Zetaris Precedent query citations        |
+|                                                    |                                               |
+| 2. 2D Interactive Pitch Telemetry Canvas           | 2. Consistency Evaluator Summary              |
+|    - Top-down vector pitch view                    |    - Precedent Deviation Index (PDI) gauge    |
+|    - Ball velocity & trajectory vector             |    - Referee Kovács Leniency Bias meter       |
+|    - Player spatial positions & contact point      |                                               |
+|    - Limb angle caliper (108° unnatural silhouette)| 3. Dual Output Tabs:                          |
+|                                                    |    [Tab A: B2B Regulatory Appeal Dossier]     |
+| 3. Historical Precedent Comparison Card             |    [Tab B: Broadcast Transparency Card]       |
+|    - Target: Pubill Goal-Kick Handing (2026)       |                                               |
+|    - Anchor: Tyrone Mings Handball (Villa vs Brugge)|                                              |
+|    - Rule: IFAB Law 12.1 Para 3                    |                                               |
++----------------------------------------------------+-----------------------------------------------+
+| BOTTOM DOCK: System Diagnostics | Zetaris Virtual SQL Trace | Meterless Memory State | API Latency |
++----------------------------------------------------------------------------------------------------+
 ```
 
-### Typography Hierarchy
-
-* **Font Family**: `Inter, system-ui, sans-serif` for body; `Geist, sans-serif` for headers.
-* **Tabular Figures**: `font-mono` / `tabular-nums` for all match minutes, aggregate scores, and consistency percentages to prevent layout jitter.
-* **Scale**:
-  * Header Banner: `text-2xl font-bold tracking-tight text-white`
-  * Score Display: `text-4xl font-extrabold tracking-wider font-mono`
-  * Section Titles: `text-sm font-semibold uppercase tracking-widest text-pitch-600`
-  * Body Text: `text-sm text-text-secondary leading-relaxed`
-  * Small Badges: `text-xs font-semibold px-2 py-0.5 rounded-full`
-
 ---
 
-## 3. Component Architecture & UI Hierarchy
+## 6. Detailed Component Specifications
 
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│  MATCH HEADER (UCL Banner · FC Barcelona 2 – 3 Atlético Madrid)       │
-├────────────────────────────────────────────────────────────────────────┤
-│  TIMELINE SCRUBBER [ 0' ── 29'🩸 ── 54'⚽✋ ── 79'🟥 ── 90' ]          │
-├───────────────────────────────────┬────────────────────────────────────┤
-│  LEFT COLUMN: INCIDENT INSPECTOR  │  RIGHT COLUMN: LAW18 ADJUDICATION  │
-│  - Incident Summary               │  - Radial Consistency Gauge        │
-│  - Physical Telemetry Card        │    (e.g., 8% Crimson Blunder)      │
-│  - 2D Pitch Coordinate Map        │  - Dual Output Tabs:               │
-│  - On-Field Call vs. VAR Stance   │    [ B2B Audit ] [ Public Card ]   │
-├───────────────────────────────────┴────────────────────────────────────┤
-│  BOTTOM DRAWER: LIVE MULTI-AGENT DELIBERATION CHAMBER                   │
-│  [VAR Protocol Advocate] ◄──── Debate / Rebuttal ────► [IFAB Auditor]  │
-│  - Live streaming arguments · Cited precedents · H-MEM Referee Memory  │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 4. Detailed Component Specifications
-
-### 1. `MatchHeader.tsx` (UCL Tie Scoreboard)
-* **Visual Style**: Sleek top banner with dark navy gradient `#001D4A` to `#0B0E14`.
+### 6.1 Topbar (Command Header)
+* **Height**: `56px` (`h-14`)
+* **Background**: `bg-[#0F141C]` with `border-b border-[#263043]`
 * **Elements**:
-  * Official UEFA Champions League starball logo badge.
-  * Scoreboard: **FC Barcelona 2 – 3 Atlético Madrid** (Aggregate).
-  * Stage: *Quarter-Final · 2nd Leg at Metropolitano (April 14, 2026)* / *1st Leg at Camp Nou (April 8, 2026)*.
-  * Officiating Crew: Referee chip (Clément Turpin / István Kovács), VAR Lead chip.
+  * **Brand**: `LAW 18` in bold monospace (`font-mono tracking-widest text-slate-100 font-bold`) followed by a discreet badge: `OFFICIATING CONSISTENCY ENGINE`.
+  * **Incident Selector**: Dropdown showing the 3 core benchmark cases:
+    1. `54' UCL: Marc Pubill Goal-Kick Handball (FCB vs ATM)`
+    2. `29' UCL: Fermín López High-Boot Head Contact (FCB vs ATM)`
+    3. `79' UCL: Eric García DOGSO Red Card (FCB vs ATM)`
+  * **Live Engine Status Lamp**: Glowing dot with tabular text (`METERLESS: ACTIVE | ZETARIS: FEDERATED | NEMOTRON: READY`).
+  * **Export Action**: High-contrast button: `Generate Formal Appeal Dossier (PDF/JSON)`.
 
-### 2. `TimelineSlider.tsx` (Chronological Match Scrubber)
-* **Visual Style**: Inspired by FotMob's match momentum timeline.
-* **Interaction**:
-  * Continuous line from 0' to 90'+.
-  * Interactive incident badges positioned at exact match minutes:
-    * **29' (High-Boot Collision)**: Yellow warning badge with collision icon and blood alert tag.
-    * **54' (Pubill Handball Pickup)**: Hand icon with red question mark badge.
-    * **79' (Eric García DOGSO Red)**: Solid red card icon with VAR review indicator.
-  * Clicking any badge instantly updates the active incident state with a smooth Framer Motion spring transition.
+### 6.2 2D Pitch & Spatial Vector Visualizer
+* **Container**: `bg-[#080A0E]` surrounded by a crisp `border border-[#263043] rounded-lg`.
+* **Pitch Surface**: Dark tactical turf (`#0C131D`) with subtle pitch markings (`#1E293B`) at official 105m x 68m proportions.
+* **Telemetry Visuals**:
+  * **Ball Trajectory**: Cyan vector line (`#0284C7`) with dashed motion trail and direction arrowhead.
+  * **Players**: High-contrast circles with squad numbers:
+    * Defending Team (Atlético): `#EF4444` border, `#161C26` fill.
+    * Attacking Team (Barcelona): `#3B82F6` border, `#161C26` fill.
+    * Referee: `#F59E0B` diamond icon.
+  * **Incident Focus Zone**: Highlighted box around the penalty area or contact quadrant.
+  * **Vector Overlays**:
+    * Arm angle indicator (e.g. `108°` arc showing deviation from natural silhouette).
+    * Impact speed readout (`8.2 m/s`, `0.18s reaction window`).
 
-### 3. `IncidentTelemetryCard.tsx` (Physical Event Inspector)
-* **Visual Style**: Clean tabular grid with `#1A2232` background and `#2A3447` border.
-* **Data Points Displayed**:
-  * **Event Type**: `HANDBALL`, `SERIOUS_FOUL_PLAY`, `DOGSO`.
-  * **Ball Status**: `LIVE_IN_PLAY` (highlighted in emerald) vs `DEAD_BALL`.
-  * **Impact / Contact Vector**: e.g., *Head/Facial laceration at 1.45m elevation; Studs forward*.
-  * **On-Field Ruling**: *No Foul / Play On* vs. *Straight Red Card*.
-  * **VAR Action**: *No Monitor Review* vs. *On-Field Review Recommended*.
+### 6.3 Live Adversarial Deliberation Chamber
+This is the core cognitive display. **It does NOT look like a generic chatbot.** It is modeled after an official court transcript or aviation black box recording.
 
-### 4. `PitchRadar2D.tsx` (Interactive Spatial Pitch)
-* **Visual Style**: Top-down stylized green pitch graphic with subtle yard markings and 18-yard box.
-* **Features**:
-  * Pulsing neon dot indicating exact pitch coordinates of the incident.
-  * Ball vector trajectory arrow (e.g., short goal-kick pass from Musso to Pubill).
-  * Visual representation of penalty area boundary and referee sightlines.
+* **Layout**: Chronological audit trail with discrete turn cards.
+* **Agent Turn Card Anatomy**:
+  ```
+  +-------------------------------------------------------------------------+
+  | [ROLE BADGE: VAR ADVOCATE]               STEP 02/05 | TIMESTAMP: 00:01.4s|
+  | Target: Defending On-Field Non-Call                                      |
+  +-------------------------------------------------------------------------+
+  | "Referee Kovács maintained an unobstructed sightline (8.4m distance,     |
+  | 42° angle). On-field ruling of non-punishable contact falls within the    |
+  | referee discretion corridor: ball was moving away from attacking goal,   |
+  | establishing insufficient grounds for Clear & Obvious intervention."    |
+  |                                                                         |
+  | Cited Doctrine: IFAB Protocol 2025/26 - "High Bar for Intervention"     |
+  +-------------------------------------------------------------------------+
+  ```
+  Followed immediately by:
+  ```
+  +-------------------------------------------------------------------------+
+  | [ROLE BADGE: RULES AUDITOR]              STEP 03/05 | TIMESTAMP: 00:02.1s|
+  | Target: Statutory Prosecution & Precedent Challenge                     |
+  +-------------------------------------------------------------------------+
+  | "REBUTTAL: Advocate argument fails on statutory grounds.                 |
+  | Under Law 12.1 (Handling the Ball), once the ball is in play from a      |
+  | goal kick, any deliberate outfield touch with hand/arm in the penalty   |
+  | area is a mandatory penalty kick.                                        |
+  |                                                                         |
+  | PRECEDENT MATCH FOUND (Zetaris Federated SQL):                           |
+  | Case: #UCL-2024-MINGS | Aston Villa vs Club Brugge (06/11/2024)          |
+  | Incident: Tyrone Mings picked up live goal-kick inside box.              |
+  | Sanction Imposed: Penalty Kick awarded. Similarity Score: 94.8%."        |
+  +-------------------------------------------------------------------------+
+  ```
+* **Speaker Color-Coding**:
+  * `VAR Advocate`: Cold Slate / Zinc header (`border-l-2 border-slate-400`).
+  * `Rules Auditor`: Amber / Crimson header (`border-l-2 border-amber-500`).
+  * `Consistency Evaluator`: Emerald header (`border-l-2 border-emerald-500`).
 
-### 5. `DeliberationFeed.tsx` (The Adversarial Chamber)
-* **Visual Style**: Modern multi-agent chat stream with distinct avatar badges and glowing borders.
-* **Agent Cards**:
-  * **VAR Protocol Advocate** (Purple accent `#7C3AED`): Cites the high "Clear and Obvious" threshold, camera angle ambiguity, and natural movement biomechanics.
-  * **IFAB Rules Auditor** (Cyan accent `#00E5FF`): Cites strict statutory clauses (Law 16.1, Law 12.3) and lethal precedents (Tyrone Mings penalty).
-  * **Consistency Evaluator** (Gold accent `#FFAB00`): Injects H-MEM referee profile data (Kovács's reluctance to consult monitor) and delivers real-time synthesis.
+### 6.4 The Decision Metric: Precedent Deviation Index (PDI)
+Instead of a simple "yes/no", Law18 provides an authoritative quantitative gauge:
+* **PDI Gauge**: Horizontal segmented meter from `0%` to `100%`:
+  * `0% - 20%`: **CONSISTENT** (Within standard officiating margin).
+  * `21% - 49%`: **SUBJECTIVE DISCRETION** (Debatable, VAR protocol respected).
+  * `50% - 79%`: **SIGNIFICANT ANOMALY** (Precedent contradicted, review warranted).
+  * `80% - 100%`: **CRITICAL ERROR / LAW BREACH** (100% contradiction of settled precedent).
+* For the Pubill incident, PDI renders at **`92%` (CRITICAL PRECEDENT BREACH)** in crimson typography.
 
-### 6. `ConsistencyGauge.tsx` (The Verdict Radial Dial)
-* **Visual Style**: Large circular SVG radial progress meter (diameter: 160px).
-* **Color States**:
-  * **0% – 24% (Blunder / Error)**: Glowing Neon Crimson `#FF1744`.
-  * **25% – 49% (Inconsistent)**: Glowing Neon Amber `#FFAB00`.
-  * **50% – 79% (Marginal / Subjective)**: Slate Amber `#F59E0B`.
-  * **80% – 100% (Correct / Standard)**: Glowing Electric Emerald `#00E676`.
-* **Animated Value**: Counter rolls up from 0 to final score on incident change.
-* **Verdict Banner**: Bold badge beneath the dial (e.g., `CLEAR & OBVIOUS BLUNDER (8%)`).
+### 6.5 Output Layer A: B2B Regulatory Audit Dossier
+Designed for club sporting directors and league technical committees.
+* **Format**: Structured formal report with print/PDF styling.
+* **Contents**:
+  * Official Incident Header: Match ID, Competition, Match Officials (Referee, VAR, AVAR).
+  * Statutory Breaches: Exact IFAB 2025/26 Law citations.
+  * Precedent Comparison Table: Side-by-side breakdown of current incident vs. historical anchor (Mings 2024).
+  * Referee Behavioral Delta: Historical leniency variance retrieved from Meterless H-MEM.
+  * Conclusion & Legal Standing: Formal summary for competition protest submission.
 
-### 7. Dual Output Deliverable Views
-
-#### Tab A: `B2BDossierView.tsx` (Official Regulatory Report)
-* Formatted for UEFA / PGMOL referee observers and Club Sporting Directors.
-* **Sections**:
-  1. *Executive Summary & Incident Metadata*.
-  2. *Codified IFAB Law Clauses*: Direct quotes from Law 12 and Law 16.
-  3. *Precedent Comparison Matrix*: Table showing Tyrone Mings (Villa vs Brugge) vs. Marc Pubill, detailing why the non-penalty directly violated European precedent.
-  4. *Referee Performance Assessment*: Rating the crew's adherence to the VAR Handbook.
-  5. *Actionable Action*: "Download Official PDF Dossier".
-
-#### Tab B: `PublicMatchCenterCard.tsx` (Broadcast / Fan Card)
-* Formatted like a Premier League Match Centre or FIFA Club World Cup stadium jumbotron card.
-* **Card Specs**:
-  * 16:9 aspect ratio container with sharp rounded corners.
-  * Large decision chip: **MISSED PENALTY & YELLOW CARD (8% CONSISTENCY)**.
-  * **3 Plain-English Bullet Points**:
-    1. *The ball was legally in play the instant Juan Musso kicked it.*
-    2. *Marc Pubill deliberately stopped the live ball with his hands inside the box.*
-    3. *Under IFAB Law 16 & UEFA precedents (e.g. Tyrone Mings, 2024), this is a mandatory penalty kick.*
-  * Social Share button: "Copy Broadcast Card".
+### 6.6 Output Layer B: Public Transparency Card
+Designed for broadcast match-centers and television graphics (e.g. TNT Sports, DAZN, CBS Sports).
+* **Format**: Ultra-clean, high-contrast, broadcast lower-third card.
+* **Visual**:
+  * Header: `KMI TRANSPARENCY EXPLANATION | INCIDENT #01`
+  * Verdict Banner: `OFFICIATING ANOMALY IDENTIFIED — MANDATORY PENALTY OMITTED`
+  * 3 Plain-English Bullet Points (Strictly readable by general audiences in 8 seconds):
+    1. **Ball Status**: The goal kick was legally completed and the ball was in active play.
+    2. **Infraction**: Marc Pubill deliberately controlled the live ball using both hands inside his penalty area.
+    3. **Precedent**: IFAB Law 12.1 mandates a direct penalty kick; identical to the sanctioned Tyrone Mings incident in the 2024 Champions League.
 
 ---
 
-## 5. Animation & Micro-Interactions
+## 7. Interactive States & Micro-Interactions
 
-* **Framer Motion Transitions**:
-  * Incident selection: Smooth cross-fade between incident telemetry cards.
-  * Gauge loading: `stroke-dashoffset` animated SVG transition taking 1.2s with `easeOutExpo`.
-  * Deliberation stream: Argument cards slide in from bottom with slight opacity stagger.
-* **Pulse Effects**: The active incident badge on the timeline pulses with a subtle box-shadow glow matching its verdict color.
+1. **State 1: Idle / Incident Loaded**:
+   * Telemetry canvas populated with starting player coordinates and ball vectors.
+   * Deliberation chamber shows "Ready to initiate multi-agent review".
+   * Primary Action Button: `[ INITIATE LAW18 DELIBERATION ]` in high-contrast emerald text with a crisp border.
+2. **State 2: Live Deliberation Streaming**:
+   * Telemetry canvas highlights active contact points.
+   * Deliberation cards appear sequentially via Server-Sent Events (SSE).
+   * Monospace timer in the header counts execution latency (`1.2s... 2.4s...`).
+3. **State 3: Evaluation Complete & Audited**:
+   * PDI Gauge animates to its calculated value.
+   * Precedent comparison table illuminates matching data points.
+   * Tabs enable switching between the **B2B Regulatory Dossier** and the **Public Transparency Card**.
+
+---
+
+## 8. Frontend Engineering Stack & Constraints
+
+* **Framework**: Next.js 14 (App Router) + TypeScript.
+* **Styling**: Tailwind CSS + `clsx` + `tailwind-merge`.
+* **Icons**: `lucide-react` (strictly technical iconography: `Scale`, `ShieldAlert`, `FileText`, `Activity`, `CheckCircle2`, `AlertTriangle`).
+* **Charts & Pitch**: Native SVG components for the 2D pitch visualizer (eliminates heavy canvas libraries, ensures instant loading and crisp resolution on retina displays).
+* **Components**: Radix UI primitives (`@radix-ui/react-tabs`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-dialog`) unstyled and customized with our technical tokens.
+
+---
+
+## 9. Verification & Quality Rubric
+
+Before any frontend component is accepted into `law18`, it must pass this 4-point test:
+1. **The Opta Test**: Does this screen look like an official sports analytics terminal used by a professional analyst?
+2. **The Slop Test**: Does any part of the UI use purple gradients, floating robotic mascots, or chat bubble nonsense? (If yes, immediate reject).
+3. **The Density Test**: Is the information cleanly visible without excessive scrolling?
+4. **The Latency Test**: Does the page render in sub-second time without client-side lag?
