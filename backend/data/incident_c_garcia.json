@@ -1,0 +1,150 @@
+{
+  "id": "incident-c",
+  "tabLabel": "79' Eric García DOGSO",
+  "shortTitle": "Eric García Denial of Goal Scoring Opportunity",
+  "matchHeader": {
+    "competition": "UEFA Champions League 2025/26",
+    "stage": "Quarter-Final Leg 2",
+    "date": "April 14, 2026",
+    "venue": "Cívitas Metropolitano, Madrid",
+    "homeTeam": { "name": "Atlético Madrid", "score": 2 },
+    "awayTeam": { "name": "FC Barcelona", "score": 2 },
+    "referee": "Clément Turpin (France)",
+    "varReferee": "Jérôme Brisard (France)",
+    "officialDecision": "Direct Red Card (DOGSO) After On-Field Review",
+    "officialVarAction": "VAR Recommended Review; On-Field Call Overturned from Play-On to Red Card"
+  },
+  "verdict": {
+    "tier": "MARGINAL_CONSISTENCY",
+    "precedentDeviationIndex": 58,
+    "consistencyScore": 42,
+    "badgeLabel": "58% PRECEDENT BREACH",
+    "headline": "Marginal Red Card / Low Threshold Intervention",
+    "subheadline": "Disputed DOGSO Criteria Under Law 12.3 — Covering Defender Proximity Ignored",
+    "broadcastTakeaway": [
+      "Contact was minimal incidental heel-clipping 32 meters from the goal line.",
+      "Covering defender Jules Koundé maintained an active recovery angle at 4.2m distance with superior velocity.",
+      "The VAR intervention breached the 'Clear and Obvious' benchmark due to doubt over Sørloth's ball control and the presence of covering defenders."
+    ]
+  },
+  "telemetry": {
+    "metrics": [
+      { "label": "DISTANCE TO GOAL", "value": "32.4 METERS", "sublabel": "Long distance to target", "status": "warning" },
+      { "label": "COVERING DEFENDER", "value": "4.2m RECOVERY", "sublabel": "Koundé in active pursuit", "status": "alert" },
+      { "label": "BALL CONTROL", "value": "HEAVY TOUCH", "sublabel": "Ball trajectory angled away", "status": "warning" },
+      { "label": "VAR CLEAR/OBVIOUS", "value": "HIGH DOUBT", "sublabel": "Subjective soft contact", "status": "alert" }
+    ],
+    "pitch": {
+      "viewBox": "0 0 105 68",
+      "highlightZone": {
+        "x": 20,
+        "y": 15.0,
+        "width": 35.0,
+        "height": 38.0,
+        "type": "TOUCHLINE"
+      },
+      "players": [
+        { "id": "p1", "name": "Sørloth", "number": 9, "team": "OPPONENT", "x": 38.0, "y": 32.0, "label": "9 Sørloth (Breakaway)", "isActionSubject": true },
+        { "id": "p2", "name": "Eric García", "number": 24, "team": "BARCELONA", "x": 39.2, "y": 32.8, "label": "24 Eric García", "isActionSubject": true },
+        { "id": "p3", "name": "Koundé", "number": 23, team: "BARCELONA", "x": 36.5, "y": 28.0, "label": "23 Koundé (Covering)" },
+        { "id": "p4", "name": "Ter Stegen", "number": 1, team: "BARCELONA", "x": 8.0, "y": 34.0, "label": "1 Ter Stegen (GK)" }
+      ],
+      "ball": {
+        "x": 34.0,
+        "y": 31.0,
+        "status": "LIVE_IN_PLAY",
+        "elevation": 0.1,
+        "speed": 8.8
+      },
+      "vectors": [
+        {
+          "id": "v1",
+          "type": "RUN",
+          "from": { "x": 39.2, "y": 32.8 },
+          "to": { "x": 38.0, "y": 32.0 },
+          "label": "Tracking contact",
+          "color": "#F59E0B",
+          "dashed": true
+        },
+        {
+          "id": "v2",
+          "type": "RUN",
+          "from": { "x": 36.5, "y": 28.0 },
+          "to": { "x": 33.0, "y": 30.5 },
+          "label": "Koundé recovery vector (7.8 m/s)",
+          "color": "#10B981"
+        }
+      ],
+      "contactPoint": {
+        "x": 38.0,
+        "y": 32.0,
+        "timestamp": "78:12",
+        "description": "Minimal heel clip outside penalty area (32.4m)"
+      }
+    }
+  },
+  "deliberation": [
+    {
+      "agent": "VARAdvocate",
+      "role": "DEFENSE",
+      "timestamp": "78:20",
+      "message": "Advocate Position: Support DOGSO sanction. Sørloth had breached the last defensive line in central space. Once contact tripped the forward from behind, the goal scoring opportunity was denied, validating VAR review.",
+      "citations": ["IFAB Law 12.3 DOGSO Criteria", "VAR Protocol KMI Guidelines"]
+    },
+    {
+      "agent": "RulesAuditor",
+      "role": "PROSECUTION",
+      "timestamp": "78:26",
+      "message": "Audit Objection: Law 12.3 sets four cumulative tests for DOGSO: distance, play direction, likelihood of ball control, and location/number of defenders. Sørloth's previous touch was heavy and tracking toward the corner flag, and Koundé was positioned 4.2m inside with recovery trajectory. In David Luiz vs Wolves (2021), similar incidental contact was heavily criticized by PGMOL as an over-application of DOGSO.",
+      "citations": ["IFAB Law 12.3 Four-Pillar Test", "PGMOL Independent Review 2021"]
+    },
+    {
+      "agent": "ConsistencyEvaluator",
+      "role": "ARBITRATION",
+      "timestamp": "78:32",
+      "message": "Arbitration Finding: Threshold error. The contact was neither clear nor unambiguous enough to overturn Turpin's original live decision. While a yellow card for a stopping a promising attack (SPA) was valid, a straight red breached historical VAR intervention thresholds. Precedent Deviation Index: 58%.",
+      "citations": ["Law18 Consistency Benchmark", "UEFA Threshold Index"]
+    }
+  ],
+  "precedent": {
+    "title": "David Luiz vs. Wolves",
+    "match": "Premier League (Arsenal vs. Wolves)",
+    "date": "February 2, 2021",
+    "playerInvolved": "David Luiz (Arsenal) / Willian José (Wolves)",
+    "similarityScore": 0.842,
+    "officialRuling": "Red Card (Heavily Criticized in Subsequent PGMOL Guidance)",
+    "deviationAnalysis": "Incidental knee-on-heel contact with no intentional trip. While originally sanctioned with a red card, refereeing bodies subsequently modified enforcement to prevent soft DOGSO dismissals when covering defenders are in recovery proximity."
+  },
+  "regulatoryDossier": {
+    "dossierId": "DOS-UCL-2026-099-DOGSO",
+    "timestamp": "2026-04-14T21:19:40Z",
+    "matchId": "UCL-2026-QF2-ATM-FCB",
+    "competition": "UEFA Champions League",
+    "refereeProfile": {
+      "name": "Clément Turpin",
+      "association": "FFF (France) / UEFA Elite",
+      "careerMatches": 168,
+      "strictnessPercentile": 52.1,
+      "penaltyAwardRate": "0.26 per 90",
+      "historicalVarOverturnRate": "18.4%"
+    },
+    "zetarisQuery": "SELECT * FROM virtual_ifab_archive WHERE offense = 'DOGSO' AND distance_to_goal > 30.0 AND defenders_covering >= 1;",
+    "zetarisResults": {
+      "clausesChecked": 24,
+      "precedentsMatched": 11,
+      "executionTimeMs": 46
+    },
+    "verbatimStatutes": [
+      {
+        "law": "IFAB Law 12.3",
+        "subclause": "Denying a goal or an obvious goal-scoring opportunity (DOGSO)",
+        "text": "The following must be considered: distance between the offence and the goal; general direction of the play; likelihood of keeping or gaining control of the ball; location and number of defenders."
+      }
+    ],
+    "meterlessMemoryTrace": {
+      "contextId": "HMEM-REF-TURPIN-DOGSO-2026",
+      "hMemClusters": ["Turpin_CardThreshold", "Late_Game_VAR_Deference"],
+      "boundedContextTokens": 640
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "id": "incident-a",
+  "tabLabel": "54' Pubill Handball",
+  "shortTitle": "Marc Pubill Handball Pickup",
+  "matchHeader": {
+    "competition": "UEFA Champions League 2025/26",
+    "stage": "Quarter-Final Leg 1",
+    "date": "April 8, 2026",
+    "venue": "Spotify Camp Nou, Barcelona",
+    "homeTeam": { "name": "FC Barcelona", "score": 0 },
+    "awayTeam": { "name": "Atlético Madrid", "score": 1 },
+    "referee": "István Kovács (Romania)",
+    "varReferee": "Marco Di Bello (Italy)",
+    "officialDecision": "Play On (No Foul)",
+    "officialVarAction": "Check Complete — Silent Support (No On-Field Review)"
+  },
+  "verdict": {
+    "tier": "CRITICAL_BREACH",
+    "precedentDeviationIndex": 92,
+    "consistencyScore": 8,
+    "badgeLabel": "92% PRECEDENT BREACH",
+    "headline": "Mandatory Penalty Kick Omitted",
+    "subheadline": "Violation of IFAB Law 12.1 & Direct Breach of 2024 Tyrone Mings UEFA Precedent",
+    "broadcastTakeaway": [
+      "The goal-kick restart was legally complete the moment goalkeeper Musso kicked and clearly moved the ball.",
+      "Defender Marc Pubill deliberately picked up the live ball with both hands inside the 18-yard box to reposition it.",
+      "Under IFAB Law 12.1 and binding UEFA directives, handling a live ball inside the penalty box mandates a penalty kick and a second yellow card."
+    ]
+  },
+  "telemetry": {
+    "metrics": [
+      { "label": "BALL STATE", "value": "LIVE IN PLAY", "sublabel": "Kicked & moved 8.4m", "status": "alert" },
+      { "label": "TOUCH TYPE", "value": "HAND PICKUP", "sublabel": "Both hands grasp ball", "status": "alert" },
+      { "label": "BOX PROXIMITY", "value": "INSIDE (11.2m)", "sublabel": "Inside 18-yard area", "status": "warning" },
+      { "label": "PRECEDENT MATCH", "value": "98.4% SIMILAR", "sublabel": "Tyrone Mings (2024)", "status": "alert" }
+    ],
+    "pitch": {
+      "viewBox": "0 0 105 68",
+      "highlightZone": {
+        "x": 0,
+        "y": 13.84,
+        "width": 16.5,
+        "height": 40.32,
+        "type": "PENALTY_AREA"
+      },
+      "players": [
+        { "id": "p1", "name": "Musso", "number": 13, "team": "OPPONENT", "x": 5.5, "y": 34.0, "label": "13 Musso (GK)" },
+        { "id": "p2", "name": "Pubill", "number": 2, "team": "OPPONENT", "x": 13.2, "y": 26.5, "label": "2 Pubill (DF)", "isActionSubject": true },
+        { "id": "p3", "name": "Lewandowski", "number": 9, "team": "BARCELONA", "x": 22.0, "y": 29.0, "label": "9 Lewandowski" },
+        { "id": "p4", "name": "Raphinha", "number": 11, "team": "BARCELONA", "x": 19.5, "y": 44.0, "label": "11 Raphinha" },
+        { "id": "ref", "name": "Kovács", "number": 0, "team": "REFEREE", "x": 28.0, "y": 38.0, "label": "Ref Kovács" }
+      ],
+      "ball": {
+        "x": 13.2,
+        "y": 26.5,
+        "status": "LIVE_IN_PLAY",
+        "elevation": 0.35,
+        "speed": 0.0
+      },
+      "vectors": [
+        {
+          "id": "v1",
+          "type": "PASS",
+          "from": { "x": 5.5, "y": 34.0 },
+          "to": { "x": 13.2, "y": 26.5 },
+          "label": "Musso goal kick pass (8.4m)",
+          "color": "#38BDF8"
+        }
+      ],
+      "contactPoint": {
+        "x": 13.2,
+        "y": 26.5,
+        "timestamp": "53:48",
+        "description": "Deliberate two-hand pickup on live ball"
+      }
+    }
+  },
+  "deliberation": [
+    {
+      "agent": "VARAdvocate",
+      "role": "DEFENSE",
+      "timestamp": "53:52",
+      "message": "Advocate Position: Defend on-field call. Referee Kovács had an unobstructed direct sightline (22m distance). Contact occurred during an unpressured defensive restart with no active attacking phase, supporting the high Clear & Obvious threshold for non-intervention.",
+      "citations": ["IFAB VAR Protocol §2.1", "UEFA Ref Circular 2025/03"]
+    },
+    {
+      "agent": "RulesAuditor",
+      "role": "PROSECUTION",
+      "timestamp": "53:55",
+      "message": "Audit Objection: IFAB Law 16.1 explicitly dictates 'The ball is in play when it is kicked and clearly moves.' Once Musso kicked the ball, the restart was consummated. Law 12.1 categorizes deliberate hand contact in the box as an objective, non-interpretative penalty offense. In Club Brugge vs Aston Villa (2024), referee Stieler awarded a penalty against Tyrone Mings under identical spatial mechanics.",
+      "citations": ["IFAB Law 16.1 (The Goal Kick)", "IFAB Law 12.1 (Handling the Ball)", "UEFA Precedent Ref #UCL-2024-048"]
+    },
+    {
+      "agent": "ConsistencyEvaluator",
+      "role": "ARBITRATION",
+      "timestamp": "53:59",
+      "message": "Arbitration Finding: Overturn warranted. The Clear & Obvious threshold was breached because the handling was deliberate, unambiguous, and occurred on a live ball. 98.4% statistical parity with the Mings precedent dictates a mandatory penalty kick. Precedent Deviation Index: 92%.",
+      "citations": ["Law18 Consensus Engine", "IFAB Statutory Alignment Matrix"]
+    }
+  ],
+  "precedent": {
+    "title": "Aston Villa vs. Club Brugge",
+    "match": "UEFA Champions League Matchday 4",
+    "date": "November 6, 2024",
+    "playerInvolved": "Tyrone Mings (Aston Villa)",
+    "similarityScore": 0.984,
+    "officialRuling": "Penalty Kick Awarded (Confirmed by UEFA Technical Committee)",
+    "deviationAnalysis": "In both instances, the goalkeeper took a short lateral goal kick to a defender who picked up the moving ball with his hands under the false impression play had not restarted. While Mings was penalized, Pubill was granted immunity, representing an acute 92% inter-match consistency divergence."
+  },
+  "regulatoryDossier": {
+    "dossierId": "DOS-UCL-2026-084-KOVACS",
+    "timestamp": "2026-04-08T21:54:12Z",
+    "matchId": "UCL-2026-QF1-FCB-ATM",
+    "competition": "UEFA Champions League",
+    "refereeProfile": {
+      "name": "István Kovács",
+      "association": "FRF (Romania) / UEFA Elite",
+      "careerMatches": 142,
+      "strictnessPercentile": 78.4,
+      "penaltyAwardRate": "0.38 per 90 (High)",
+      "historicalVarOverturnRate": "12.2% (Low resistance)"
+    },
+    "zetarisQuery": "SELECT precedent_id, law_cited, similarity_score FROM virtual_ifab_archive WHERE offense_category = 'HANDBALL_BOX' AND restart_type = 'GOAL_KICK';",
+    "zetarisResults": {
+      "clausesChecked": 14,
+      "precedentsMatched": 6,
+      "executionTimeMs": 42
+    },
+    "verbatimStatutes": [
+      {
+        "law": "IFAB Law 16.1",
+        "subclause": "Procedure: The Goal Kick",
+        "text": "The ball must be stationary and is kicked from any point within the goal area by a player of the defending team. The ball is in play when it is kicked and clearly moves."
+      },
+      {
+        "law": "IFAB Law 12.1",
+        "subclause": "Fouls and Misconduct: Handling the ball",
+        "text": "It is an offence if a player deliberately touches the ball with their hand/arm, for example moving the hand/arm towards the ball. A penalty kick is awarded if an offense occurs inside the penalty area."
+      }
+    ],
+    "meterlessMemoryTrace": {
+      "contextId": "HMEM-REF-KOVACS-2026",
+      "hMemClusters": ["Kovacs_Restart_Leniency", "UCL_QuarterFinal_Pressure_Index"],
+      "boundedContextTokens": 612
+    }
+  }
+}

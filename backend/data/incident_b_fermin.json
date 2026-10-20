@@ -1,0 +1,141 @@
+{
+  "id": "incident-b",
+  "tabLabel": "29' Fermín Collision",
+  "shortTitle": "Fermín López / Juan Musso Head Collision",
+  "matchHeader": {
+    "competition": "UEFA Champions League 2025/26",
+    "stage": "Quarter-Final Leg 2",
+    "date": "April 14, 2026",
+    "venue": "Cívitas Metropolitano, Madrid",
+    "homeTeam": { "name": "Atlético Madrid", "score": 1 },
+    "awayTeam": { "name": "FC Barcelona", "score": 2 },
+    "referee": "Clément Turpin (France)",
+    "varReferee": "Jérôme Brisard (France)",
+    "officialDecision": "Offensive Foul on Fermín (No Penalty)",
+    "officialVarAction": "Check Complete — Incident Deemed 'Natural Collision'"
+  },
+  "verdict": {
+    "tier": "SEVERE_ERROR",
+    "precedentDeviationIndex": 86,
+    "consistencyScore": 14,
+    "badgeLabel": "86% PRECEDENT BREACH",
+    "headline": "Reckless Endangerment / Penalty Omitted",
+    "subheadline": "Violation of IFAB Law 12.3 (Endangering Safety of Opponent) — Ederson/Mané Precedent Breached",
+    "broadcastTakeaway": [
+      "Fermín López legally contested an aerial cross inside the box with an orthodox header trajectory.",
+      "Goalkeeper Juan Musso lunged outward with an elevated boot at 1.48m height, making direct stud contact with Fermín's head and face.",
+      "IFAB Law 12.3 explicitly establishes that intent is subordinate to player safety; reckless studs to the head require an immediate penalty and disciplinary sanction."
+    ]
+  },
+  "telemetry": {
+    "metrics": [
+      { "label": "BOOT ELEVATION", "value": "1.48 METERS", "sublabel": "Head/neck height", "status": "alert" },
+      { "label": "IMPACT FORCE", "value": "24.8 kN", "sublabel": "Severe concussion risk", "status": "alert" },
+      { "label": "BALL CONTACT", "value": "OPPONENT ZERO", "sublabel": "Musso missed ball completely", "status": "warning" },
+      { "label": "DISCIPLINARY REQ", "value": "PENALTY + RED/YC", "sublabel": "Serious foul play / Reckless", "status": "alert" }
+    ],
+    "pitch": {
+      "viewBox": "0 0 105 68",
+      "highlightZone": {
+        "x": 0,
+        "y": 20.0,
+        "width": 14.0,
+        "height": 28.0,
+        "type": "PENALTY_AREA"
+      },
+      "players": [
+        { "id": "p1", "name": "Musso", "number": 13, "team": "OPPONENT", "x": 7.2, "y": 33.2, "label": "13 Musso (Lunge)", "isActionSubject": true },
+        { "id": "p2", "name": "Fermín", "number": 16, "team": "BARCELONA", "x": 8.4, "y": 34.1, "label": "16 Fermín (Aerial)", "isActionSubject": true },
+        { "id": "p3", "name": "Giménez", "number": 2, "team": "OPPONENT", "x": 9.8, "y": 31.0, "label": "2 Giménez" },
+        { "id": "ref", "name": "Turpin", "number": 0, "team": "REFEREE", "x": 22.0, "y": 40.0, "label": "Ref Turpin" }
+      ],
+      "ball": {
+        "x": 8.4,
+        "y": 34.1,
+        "status": "LIVE_IN_PLAY",
+        "elevation": 1.55,
+        "speed": 12.4
+      },
+      "vectors": [
+        {
+          "id": "v1",
+          "type": "COLLISION",
+          "from": { "x": 5.5, "y": 33.0 },
+          "to": { "x": 8.4, "y": 34.1 },
+          "label": "Musso explosive charge (24.8 kN)",
+          "color": "#F43F5E"
+        }
+      ],
+      "contactPoint": {
+        "x": 8.4,
+        "y": 34.1,
+        "timestamp": "28:44",
+        "description": "Studs to facial region at 1.48m elevation"
+      }
+    }
+  },
+  "deliberation": [
+    {
+      "agent": "VARAdvocate",
+      "role": "DEFENSE",
+      "timestamp": "28:50",
+      "message": "Advocate Position: Defend on-field assessment. Musso is entitled to contest his aerial domain. The goalkeeper's eyes were fixed on the flight of the ball, and the collision was a consequential result of mutual attacking momentum rather than malice.",
+      "citations": ["Goalkeeper Spatial Privilege Guidelines", "Law 12 Collision Discretion"]
+    },
+    {
+      "agent": "RulesAuditor",
+      "role": "PROSECUTION",
+      "timestamp": "28:54",
+      "message": "Audit Objection: Law 12.3 explicitly clarifies: 'Any player who lunges at an opponent in challenging for the ball from the front, with one or both legs, using excessive force or endangering the safety of an opponent is guilty of serious foul play.' In Sadio Mané vs Ederson (2017), Mané's lack of intent was dismissed because a high boot causing facial impact legally constitutes serious foul play.",
+      "citations": ["IFAB Law 12.3 (Disciplinary Action)", "PL Precedent Mané/Ederson (2017)", "UEFA Player Safety Memo"]
+    },
+    {
+      "agent": "ConsistencyEvaluator",
+      "role": "ARBITRATION",
+      "timestamp": "28:58",
+      "message": "Arbitration Finding: Gross consistency failure. Awarding an offensive foul against the injured player when the goalkeeper missed the ball entirely and led with studs to the head contradicts established safety standards. Precedent Deviation Index: 86%.",
+      "citations": ["IFAB Head Injury Protocol", "Law18 Safety Matrix"]
+    }
+  ],
+  "precedent": {
+    "title": "Sadio Mané vs. Ederson",
+    "match": "Premier League (Manchester City vs. Liverpool)",
+    "date": "September 9, 2017",
+    "playerInvolved": "Sadio Mané (Liverpool) / Ederson (Man City)",
+    "similarityScore": 0.912,
+    "officialRuling": "Direct Red Card for Serious Foul Play (Upheld upon appeal)",
+    "deviationAnalysis": "Mané was tracking an aerial ball and raised his boot to control it, unintentionally connecting with Ederson's face. The FA and IFAB firmly affirmed that intent is irrelevant when player welfare is severely endangered by a raised boot."
+  },
+  "regulatoryDossier": {
+    "dossierId": "DOS-UCL-2026-092-TURPIN",
+    "timestamp": "2026-04-14T20:29:15Z",
+    "matchId": "UCL-2026-QF2-ATM-FCB",
+    "competition": "UEFA Champions League",
+    "refereeProfile": {
+      "name": "Clément Turpin",
+      "association": "FFF (France) / UEFA Elite",
+      "careerMatches": 168,
+      "strictnessPercentile": 52.1,
+      "penaltyAwardRate": "0.26 per 90 (Moderate)",
+      "historicalVarOverturnRate": "18.4% (Standard)"
+    },
+    "zetarisQuery": "SELECT ruling, sanction, case_id FROM virtual_ifab_archive WHERE incident_type = 'HIGH_BOOT_HEAD_CONTACT' AND in_box = TRUE;",
+    "zetarisResults": {
+      "clausesChecked": 19,
+      "precedentsMatched": 8,
+      "executionTimeMs": 38
+    },
+    "verbatimStatutes": [
+      {
+        "law": "IFAB Law 12.3",
+        "subclause": "Disciplinary Action: Serious Foul Play",
+        "text": "A tackle or challenge that endangers the safety of an opponent or uses excessive force or brutality must be sanctioned as serious foul play."
+      }
+    ],
+    "meterlessMemoryTrace": {
+      "contextId": "HMEM-REF-TURPIN-2026",
+      "hMemClusters": ["Turpin_HighStakes_HomeAdvantage", "Goalkeeper_Protection_Bias"],
+      "boundedContextTokens": 580
+    }
+  }
+}

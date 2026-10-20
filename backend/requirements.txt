@@ -1,0 +1,9 @@
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
+langgraph>=0.0.30
+langchain-core>=0.1.30
+openai>=1.14.0
+requests>=2.31.0
+python-dotenv>=1.0.1
+pytest>=8.0.0
