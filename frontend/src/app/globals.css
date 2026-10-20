@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #080a0f;
+    --foreground: #f8fafc;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom Sports Authority Utility Classes */
+.bg-pitch-canvas {
+  background-color: #080a0f;
+}
+
+.bg-panel-base {
+  background-color: #0f141e;
+}
+
+.bg-panel-elevated {
+  background-color: #161d2b;
+}
+
+.bg-panel-subtle {
+  background-color: #1f293d;
+}
+
+.bg-pitch-turf {
+  background-color: #0a131c;
+}
+
+.border-technical {
+  border-color: #1b2433;
+}
+
+.border-technical-strong {
+  border-color: #2c3a52;
+}
+
+.border-active-cyan {
+  border-color: #38bdf8;
+}
+
+/* Crisp Technical Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f293d;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2c3a52;
+}
