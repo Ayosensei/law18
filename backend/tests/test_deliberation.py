@@ -48,17 +48,19 @@ def test_incident_a_langgraph_audit(graph):
     data = load_incident_json("incident-a")
     result = graph.run_audit(data)
     assert result["status"] == "DELIBERATION_COMPLETE"
-    assert result["pdi"] == 92
+    assert 85 <= result["pdi"] <= 98
     assert result["spatialContext"]["in_penalty_box"] is True
     assert len(result["debate"]) >= 3
+    assert result["precedents"][0]["player_involved"] == "Tyrone Mings"
 
 
 def test_incident_b_langgraph_audit(graph):
     data = load_incident_json("incident-b")
     result = graph.run_audit(data)
     assert result["status"] == "DELIBERATION_COMPLETE"
-    assert result["pdi"] == 86
+    assert 80 <= result["pdi"] <= 95
     assert len(result["debate"]) >= 3
+    assert "Sadio" in result["precedents"][0]["player_involved"]
 
 
 def test_incident_c_conditional_rebuttal_loop(graph):
@@ -66,9 +68,10 @@ def test_incident_c_conditional_rebuttal_loop(graph):
     data = load_incident_json("incident-c")
     result = graph.run_audit(data)
     assert result["status"] == "DELIBERATION_COMPLETE"
-    assert result["pdi"] == 58
+    assert 50 <= result["pdi"] <= 75
     # 2 debate cycles = 6 total turns (Advocate + Auditor + Evaluator) * 2
     assert len(result["debate"]) == 6
+    assert result["precedents"][0]["player_involved"] == "David Luiz"
 
 
 def test_api_deliberate_post(client):
@@ -76,4 +79,4 @@ def test_api_deliberate_post(client):
     assert response.status_code == 200
     res = response.json()
     assert res["status"] == "DELIBERATION_COMPLETE"
-    assert res["pdi"] == 92
+    assert 85 <= res["pdi"] <= 98

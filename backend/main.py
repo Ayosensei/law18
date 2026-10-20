@@ -110,28 +110,37 @@ async def stream_deliberation(incident_id: str = Query("incident-a")):
     incident_data = load_incident_json(incident_id)
 
     async def event_generator():
-        audit_result = graph.run_audit(incident_data)
-        spatial = audit_result.get("spatialContext", {})
-        precedents = audit_result.get("precedents", [])
-        debate = audit_result.get("debate", [])
-        verdict = audit_result.get("verdict", incident_data.get("verdict", {}))
-
-        # Event 1: Spatial Triage (Meterless World Model)
-        yield f"data: {json.dumps({'step': 1, 'agent': 'TriageFactAgent', 'role': 'TRIAGE', 'status': 'Spatial telemetry verified on 105x68m grid.', 'spatial': spatial})}\n\n"
-        await asyncio.sleep(0.3)
-
-        # Event 2: Knowledge Hydration (Zetaris & Meterless H-MEM)
-        prec_title = precedents[0].get("match_name", "Precedent Match") if precedents else "Binding Statute"
-        yield f"data: {json.dumps({'step': 2, 'agent': 'ZetarisRetriever', 'role': 'RETRIEVAL', 'status': f'Hydrated referee profile and matched precedent: {prec_title}', 'precedents': precedents})}\n\n"
-        await asyncio.sleep(0.4)
-
-        # Event 3+: Adversarial Debate Turns
-        for idx, turn in enumerate(debate, 3):
-            yield f"data: {json.dumps({'step': idx, 'agent': turn.get('agent'), 'role': turn.get('role'), 'message': turn.get('message'), 'cycle': turn.get('cycle', 1)})}\n\n"
-            await asyncio.sleep(0.4)
-
-        # Final Event: KMI Synthesis & Verdict
-        yield f"data: {json.dumps({'step': len(debate) + 3, 'agent': 'KMISynthesizer', 'role': 'SYNTHESIS', 'status': 'COMPLETE', 'pdi': audit_result.get('pdi'), 'consistency': audit_result.get('consistencyScore'), 'verdict': verdict, 'takeaways': verdict.get('broadcastTakeaway', [])})}\n\n"
+        step_idx = 1
+        async for chunk in graph.astream_audit(incident_data):
+            node_name = chunk.get("node")
+            node_state = chunk.get("state", {})
+            
+            if node_name == "triage":
+                spatial = node_state.get("spatial_context", {})
+                yield f"data: {json.dumps({'step': step_idx, 'node': 'triage', 'agent': 'TriageFactAgent', 'role': 'TRIAGE', 'status': 'Spatial telemetry verified on 105x68m grid.', 'spatial': spatial})}\n\n"
+                step_idx += 1
+                await asyncio.sleep(0.3)
+                
+            elif node_name == "retriever":
+                precedents = node_state.get("precedents_matched", [])
+                p_name = precedents[0].get("match_name") if precedents else "IFAB Law"
+                yield f"data: {json.dumps({'step': step_idx, 'node': 'retriever', 'agent': 'ZetarisRetriever', 'role': 'RETRIEVAL', 'status': f'Matched Zetaris precedent: {p_name}', 'precedents': precedents})}\n\n"
+                step_idx += 1
+                await asyncio.sleep(0.4)
+                
+            elif node_name in ("advocate", "auditor", "evaluator"):
+                debate = node_state.get("debate_turns", [])
+                if debate:
+                    turn = debate[-1]
+                    yield f"data: {json.dumps({'step': step_idx, 'node': node_name, 'agent': turn.get('agent'), 'role': turn.get('role'), 'message': turn.get('message'), 'cycle': turn.get('cycle', 1), 'pdi': turn.get('pdi')})}\n\n"
+                    step_idx += 1
+                    await asyncio.sleep(0.4)
+                    
+            elif node_name == "synthesizer":
+                card = node_state.get("transparency_card", {})
+                verdict = incident_data.get("verdict", {})
+                yield f"data: {json.dumps({'step': step_idx, 'node': 'synthesizer', 'agent': 'KMISynthesizer', 'role': 'SYNTHESIS', 'status': 'COMPLETE', 'transparencyCard': card, 'verdict': verdict})}\n\n"
+                step_idx += 1
 
     return StreamingResponse(event_generator(), media_type="text/event-stream")
 
