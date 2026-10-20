@@ -7,6 +7,10 @@
 > * Visual Identity & Tokens: [`docs/DESIGN.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)
 > * Sensei's Task Playbook: [`docs/TASKS_SENSEI.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_SENSEI.md)
 > * Team Operating Guide: [`docs/TEAM_WORKFLOW.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TEAM_WORKFLOW.md)
+> * Meterless Cognition Engines (LangGraph State): [`docs/SPONSOR_METERLESS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)
+> * Zetaris Data Fabric (SQL Queries & Schemas): [`docs/SPONSOR_ZETARIS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_ZETARIS.md)
+> * NVIDIA Nemotron Inference: [`docs/SPONSOR_NVIDIA.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_NVIDIA.md)
+> * Cursor Development Hub: [`docs/SPONSOR_CURSOR.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_CURSOR.md)
 
 ---
 

@@ -3,6 +3,14 @@
 
 > **Hackathon Scoring Category**: Sponsor Tech (10 Points — Headline Sponsor)  
 > **Load-Bearing Role**: Unified federated SQL access point across IFAB statutes, historical precedent databases, and live match telemetry.
+>
+> **Related Documentation**:
+> * Master Technical Spec: [`docs/PROJECT_SPEC.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/PROJECT_SPEC.md)
+> * UI/UX & Mock Data: [`docs/DESIGN.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)
+> * Multi-Agent Graph: [`docs/AGENTS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/AGENTS.md)
+> * Meterless Cognition Engines: [`docs/SPONSOR_METERLESS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)
+> * NVIDIA Nemotron Inference: [`docs/SPONSOR_NVIDIA.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_NVIDIA.md)
+> * Cursor Environment: [`docs/SPONSOR_CURSOR.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_CURSOR.md)
 
 ---
 

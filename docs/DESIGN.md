@@ -2,6 +2,14 @@
 **Philosophy: Minimalist Sports Authority. Zero Noise. Clear Guided Path. Zero Hallucination.**
 
 > **Notice for Coding Agents**: This document contains the **exhaustive and authoritative** UI specification, component tree, design tokens, and mock telemetry data for Law18. **Do NOT guess, assume, or hallucinate** UI text, coordinates, player names, metrics, or colors. Everything required to build the frontend is specified here.
+> 
+> * Related Technical Documents:
+>   * Master Technical Spec: [`docs/PROJECT_SPEC.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/PROJECT_SPEC.md)
+>   * Sensei's Frontend Task Playbook: [`docs/TASKS_SENSEI.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_SENSEI.md)
+>   * Zetaris Data Fabric Queries: [`docs/SPONSOR_ZETARIS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_ZETARIS.md)
+>   * Meterless World Model & H-MEM: [`docs/SPONSOR_METERLESS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)
+>   * NVIDIA Nemotron Inference: [`docs/SPONSOR_NVIDIA.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_NVIDIA.md)
+>   * Cursor Agent Governance: [`docs/SPONSOR_CURSOR.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_CURSOR.md)
 
 ---
 

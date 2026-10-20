@@ -2,6 +2,18 @@
 
 You are working on Law18, an agentic officiating consistency intelligence engine for the Open Agent Hackathon 2026 (Track 2: The Agent That Can Explain Why).
 
+## Master Documentation Directory
+- Master Specification: `docs/PROJECT_SPEC.md`
+- UI/UX & Mock Data: `docs/DESIGN.md`
+- Multi-Agent Deliberation Graph: `docs/AGENTS.md`
+- Sensei's Task Playbook: `docs/TASKS_SENSEI.md`
+- DuroT's Task Playbook: `docs/TASKS_DUROT.md`
+- Team Collaboration Guide: `docs/TEAM_WORKFLOW.md`
+- Zetaris Integration: `docs/SPONSOR_ZETARIS.md`
+- Meterless Integration: `docs/SPONSOR_METERLESS.md`
+- NVIDIA Nemotron Integration: `docs/SPONSOR_NVIDIA.md`
+- Cursor Environment Guide: `docs/SPONSOR_CURSOR.md`
+
 ## Project Guidelines
 1. **Zero AI Slop Rule**: No generic purple/pink gradients, conversational chatbot bubbles, or robotic marketing text. Follow the minimalist sports telemetry aesthetic in `docs/DESIGN.md`.
 2. **Data Consistency**: Never hallucinate player names, coordinates, or statistics. All UI data is strictly codified in `docs/DESIGN.md` and `frontend/src/data/incidentsData.ts`.
@@ -9,3 +21,7 @@ You are working on Law18, an agentic officiating consistency intelligence engine
    - Frontend: Next.js 14 App Router, TypeScript, Tailwind CSS (`frontend/`).
    - Backend: FastAPI, LangGraph, Pydantic v2 (`backend/`).
    - Sponsors: Zetaris (Virtual SQL fabric), Meterless (World Model, H-MEM, Markovian engine), NVIDIA Nemotron (Inference).
+4. **Zetaris Rules**:
+   - Always use Lightning SQL syntax.
+   - Run one statement at a time.
+   - Never print database credentials in logs.

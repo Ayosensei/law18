@@ -168,7 +168,7 @@ export interface Law18AuditResult {
 
 ## 4. Sponsor Technology Architecture
 
-### 1. Zetaris (Federated Officiating Data Fabric)
+### 1. Zetaris (Federated Officiating Data Fabric) — Detailed Guide: [`docs/SPONSOR_ZETARIS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_ZETARIS.md)
 * **Problem Solved**: Officiating data lives in disconnected silos: regulatory text (IFAB PDFs), relational season records (PostgreSQL/SQLite), and active match event feeds (JSON). Traditional pipelines require fragile ETL.
 * **Zetaris Solution**: Zetaris mounts these data sources as a unified virtual schema.
   * `ifab_laws` (Virtual table representing the IFAB Statutes).
@@ -176,25 +176,29 @@ export interface Law18AuditResult {
   * `match_telemetry` (Virtual table exposing incoming incident payloads).
 * **Fallback Guarantee**: Includes `SAMPLE_MODE=true` using a local SQLite/Mock client (`zetaris_client.py`) so judges can test instantly without network or credential dependencies.
 
-### 2. Meterless (Local Cognition & Memory Engine)
+### 2. Meterless (Local Cognition & Memory Engine) — Detailed Guide: [`docs/SPONSOR_METERLESS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)
 * **Problem Solved**: Standard LLMs forget referee behavioral contexts and suffer from context token explosion when reasoning through multi-step incident checklists.
 * **Meterless Solution**:
   * **H-MEM (Hierarchical Memory)**: Stores persistent behavioral profiles for top referees (István Kovács, Clément Turpin, Tobias Stieler) and seasonal refereeing circulars.
   * **World Model**: Holds the spatial, temporal, and physical pitch state (ball trajectory vectors, penalty box boundaries, player contact points).
   * **Markovian Engine**: Drives the bounded 4-step VAR checklist (Phase of Play $\to$ Contact Point $\to$ Force/Silhouette $\to$ Clear & Obvious Threshold) with $O(1)$ token carryover per reasoning node.
 
-### 3. NVIDIA Nemotron
+### 3. NVIDIA Nemotron — Detailed Guide: [`docs/SPONSOR_NVIDIA.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_NVIDIA.md)
 * **Role**: Powers the adversarial legal debates between `VARAdvocateAgent` and `RulesAuditorAgent`, ensuring deep statutory interpretation and counter-factual analysis.
 
-### 4. Cursor (Development Hub)
-* **Role**: The core IDE and agentic workspace for Sensei and DuroT. Custom `.cursorrules` enforce TypeScript types and Python Pydantic models across the codebase.
+### 4. Cursor (Development Hub) — Detailed Guide: [`docs/SPONSOR_CURSOR.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_CURSOR.md)
+* **Role**: The core IDE and agentic workspace for Sensei and DuroT. Custom [`.cursorrules`](file:///home/saturnsurfer/Documents/PROJECTS/law18/.cursorrules) enforce TypeScript types and Python Pydantic models across the codebase.
 
 ---
 
 ## 5. Associated Documentation Directory
 
 * 📄 **[AGENTS.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/AGENTS.md)**: Deep specification of every agent, prompt templates, decision trees, and LangGraph state nodes.
-* 🎨 **[DESIGN.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)**: Full design system, color tokens, Sofascore/FotMob component hierarchy, wireframes, and animations.
+* 🎨 **[DESIGN.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)**: Full design system, color tokens, Sofascore/FotMob component hierarchy, wireframes, and complete mock data repository.
 * 🤝 **[TEAM_WORKFLOW.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TEAM_WORKFLOW.md)**: Team operating rules, decoupling strategy, and milestone roadmap.
-* 👨‍💻 **[TASKS_SENSEI.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_SENSEI.md)**: Sensei's detailed task playbook.
-* 👨‍💻 **[TASKS_DUROT.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_DUROT.md)**: DuroT's detailed task playbook.
+* 👨‍💻 **[TASKS_SENSEI.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_SENSEI.md)**: Sensei's detailed task playbook (Frontend & Integrations).
+* 👨‍💻 **[TASKS_DUROT.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_DUROT.md)**: DuroT's detailed task playbook (Backend & LangGraph).
+* ⚡ **[SPONSOR_ZETARIS.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_ZETARIS.md)**: Zetaris unified data fabric integration and virtual SQL queries.
+* 🧩 **[SPONSOR_METERLESS.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)**: Meterless World Model, H-MEM, Markovian engine, and Nightshift proxy.
+* 🚀 **[SPONSOR_NVIDIA.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_NVIDIA.md)**: NVIDIA Nemotron reasoning, adversarial debate prompts, and PDI scoring.
+* 💻 **[SPONSOR_CURSOR.md](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_CURSOR.md)**: Cursor development environment, `.cursorrules` enforcement, and contract testing.

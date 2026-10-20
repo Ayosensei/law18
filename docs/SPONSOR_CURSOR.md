@@ -3,6 +3,15 @@
 
 > **Hackathon Scoring Category**: Sponsor Tech (10 Points — Required Development Environment)  
 > **Load-Bearing Role**: Development environment, architectural rule enforcement via `.cursorrules`, data contract validation, and iterative agent refinement.
+>
+> **Related Documentation**:
+> * Master Technical Spec: [`docs/PROJECT_SPEC.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/PROJECT_SPEC.md)
+> * UI/UX & Mock Data: [`docs/DESIGN.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)
+> * Multi-Agent Graph: [`docs/AGENTS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/AGENTS.md)
+> * Meterless Cognition Engines: [`docs/SPONSOR_METERLESS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)
+> * Zetaris Data Fabric: [`docs/SPONSOR_ZETARIS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_ZETARIS.md)
+> * NVIDIA Nemotron Inference: [`docs/SPONSOR_NVIDIA.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_NVIDIA.md)
+> * Root Rules File: [`.cursorrules`](file:///home/saturnsurfer/Documents/PROJECTS/law18/.cursorrules)
 
 ---
 

@@ -1,6 +1,14 @@
 # Law18 — Multi-Agent Architecture & Specification (`AGENTS.md`)
 **Open Agent Hackathon 2026 | Track 2: The Agent That Can Explain Why**
 
+> **Reference Documents**:
+> * Master Technical Specification: [`docs/PROJECT_SPEC.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/PROJECT_SPEC.md)
+> * Visual Identity & Mock Datasets: [`docs/DESIGN.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)
+> * Meterless Cognition (World Model & H-MEM): [`docs/SPONSOR_METERLESS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)
+> * Zetaris Virtual SQL Fabric: [`docs/SPONSOR_ZETARIS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_ZETARIS.md)
+> * NVIDIA Nemotron Reasoning: [`docs/SPONSOR_NVIDIA.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_NVIDIA.md)
+> * DuroT's Implementation Playbook: [`docs/TASKS_DUROT.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/TASKS_DUROT.md)
+
 ---
 
 ## 1. Multi-Agent System Philosophy

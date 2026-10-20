@@ -3,6 +3,14 @@
 
 > **Hackathon Scoring Category**: Sponsor Tech (10 Points) & NVIDIA Nemotron Award Contender  
 > **Load-Bearing Role**: Powering the multi-agent legal adversarial debate, Precedent Deviation Index (PDI) arbitration, and regulatory report synthesis.
+>
+> **Related Documentation**:
+> * Master Technical Spec: [`docs/PROJECT_SPEC.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/PROJECT_SPEC.md)
+> * UI/UX & Mock Data: [`docs/DESIGN.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/DESIGN.md)
+> * Multi-Agent Graph: [`docs/AGENTS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/AGENTS.md)
+> * Meterless Cognition Engines: [`docs/SPONSOR_METERLESS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_METERLESS.md)
+> * Zetaris Data Fabric: [`docs/SPONSOR_ZETARIS.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_ZETARIS.md)
+> * Cursor Environment: [`docs/SPONSOR_CURSOR.md`](file:///home/saturnsurfer/Documents/PROJECTS/law18/docs/SPONSOR_CURSOR.md)
 
 ---
 
