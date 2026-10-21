@@ -1,17 +1,28 @@
 # backend/main.py
 """
 FastAPI Server for Law18.
-Exposes REST and SSE streaming endpoints for multi-agent officiating audits.
+Exposes REST, SSE streaming, and direct HTML/Markdown B2B Dossier export endpoints
+for multi-agent officiating audits.
+Synchronized with Next.js frontend contracts and Pydantic v2 schemas.
 """
 
 import os
+import sys
+
+# Ensure offline fallback is default when external API or Nightshift daemon is unconfigured
+os.environ.setdefault("NVIDIA_OFFLINE_MODE", "true")
+
 import json
 import asyncio
-from typing import Dict, Any, List
-from fastapi import FastAPI, HTTPException, Query
+from typing import Dict, Any, List, Optional
+from fastapi import FastAPI, HTTPException, Query, Body, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, HTMLResponse, PlainTextResponse
+from fastapi.concurrency import run_in_threadpool
+
 from backend.deliberation.graph import DeliberationChamberGraph
+from backend.schemas.telemetry import IncidentFullData
+from backend.schemas.deliberation import Law18AuditResult
 
 app = FastAPI(
     title="Law18 Officiating Consistency Engine API",
@@ -30,24 +41,38 @@ app.add_middleware(
 
 graph = DeliberationChamberGraph()
 
+BASE_DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "data"))
 DATA_FILES = {
-    "incident-a": "backend/data/incident_a_pubill.json",
-    "incident-b": "backend/data/incident_b_fermin.json",
-    "incident-c": "backend/data/incident_c_garcia.json"
+    "incident-a": os.path.join(BASE_DATA_DIR, "incident_a_pubill.json"),
+    "incident-b": os.path.join(BASE_DATA_DIR, "incident_b_fermin.json"),
+    "incident-c": os.path.join(BASE_DATA_DIR, "incident_c_garcia.json")
 }
+
 
 def load_incident_json(incident_id: str) -> Dict[str, Any]:
     file_path = DATA_FILES.get(incident_id)
     if not file_path or not os.path.exists(file_path):
-        raise HTTPException(status_code=404, detail=f"Incident {incident_id} not found.")
-    with open(file_path, "r") as f:
+        inc = incident_id.lower()
+        if "incident-b" in inc or "incident_b" in inc or "fermin" in inc:
+            file_path = os.path.join(BASE_DATA_DIR, "incident_b_fermin.json")
+        elif "incident-c" in inc or "incident_c" in inc or "garcia" in inc:
+            file_path = os.path.join(BASE_DATA_DIR, "incident_c_garcia.json")
+        elif "incident-a" in inc or "incident_a" in inc or "pubill" in inc:
+            file_path = os.path.join(BASE_DATA_DIR, "incident_a_pubill.json")
+
+    if not file_path or not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail=f"Incident '{incident_id}' not found.")
+
+    with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
+
 
 @app.get("/health")
 def health_check():
     return {
         "status": "ONLINE",
         "service": "Law18 Officiating Consistency Engine",
+        "engine": "LangGraph StateGraph Chamber",
         "connectors": {
             "zetaris": "READY",
             "meterless_world_model": "READY",
@@ -56,53 +81,100 @@ def health_check():
         }
     }
 
+
 @app.get("/api/incidents")
-def list_incidents():
-    """Lists all available benchmark referee incidents."""
+async def list_incidents():
+    """Lists all available benchmark referee incidents with metadata and telemetry."""
     incidents = []
-    for inc_id in DATA_FILES.keys():
-        incidents.append(load_incident_json(inc_id))
+    for inc_id in ["incident-a", "incident-b", "incident-c"]:
+        data = await run_in_threadpool(load_incident_json, inc_id)
+        incidents.append(data)
     return incidents
 
+
 @app.get("/api/incidents/{incident_id}")
-def get_incident(incident_id: str):
+async def get_incident(incident_id: str):
     """Retrieves full telemetry, precedent, and audit data for a single incident."""
-    return load_incident_json(incident_id)
+    return await run_in_threadpool(load_incident_json, incident_id)
+
+
+@app.get("/api/incidents/{incident_id}/dossier.html", response_class=HTMLResponse)
+async def export_dossier_html(incident_id: str):
+    """Renders the print-ready UEFA KMI B2B Regulatory Appeal Dossier in HTML."""
+    incident_data = await run_in_threadpool(load_incident_json, incident_id)
+    audit_result = await run_in_threadpool(graph.run_audit, incident_data)
+    return HTMLResponse(content=audit_result["dossier"].get("htmlReport", ""))
+
+
+@app.get("/api/incidents/{incident_id}/dossier.md", response_class=PlainTextResponse)
+async def export_dossier_markdown(incident_id: str):
+    """Renders the formal UEFA KMI B2B Regulatory Appeal Dossier in Markdown."""
+    incident_data = await run_in_threadpool(load_incident_json, incident_id)
+    audit_result = await run_in_threadpool(graph.run_audit, incident_data)
+    return PlainTextResponse(content=audit_result["dossier"].get("markdownReport", ""))
+
 
 @app.post("/api/deliberate")
-def run_deliberation(payload: Dict[str, Any]):
+@app.post("/api/audit")
+async def run_deliberation(payload: Dict[str, Any] = Body(...)):
     """Executes the full multi-agent LangGraph deliberation chamber."""
-    incident_id = payload.get("id", "incident-a")
-    incident_data = load_incident_json(incident_id)
-    audit_result = graph.run_audit(incident_data)
+    incident_id = payload.get("id") or payload.get("incidentId") or "incident-a"
+    incident_data = await run_in_threadpool(load_incident_json, incident_id)
+    audit_result = await run_in_threadpool(graph.run_audit, incident_data)
     return audit_result
 
+
 @app.get("/api/deliberate/stream")
-async def stream_deliberation(incident_id: str = Query("incident-a")):
-    """Server-Sent Events (SSE) endpoint progressively streaming debate turns."""
-    incident_data = load_incident_json(incident_id)
+async def stream_deliberation(request: Request, incident_id: str = Query("incident-a")):
+    """Server-Sent Events (SSE) endpoint progressively streaming live LangGraph deliberation turns."""
+    incident_data = await run_in_threadpool(load_incident_json, incident_id)
 
     async def event_generator():
-        # Step 1: Spatial Triage
-        yield f"data: {json.dumps({'step': 1, 'agent': 'TriageFactAgent', 'status': 'Spatial boundaries and limb vectors verified on 105x68m grid.'})}\n\n"
-        await asyncio.sleep(1.0)
+        step_idx = 1
+        async for chunk in graph.astream_audit(incident_data):
+            if await request.is_disconnected():
+                break
 
-        # Step 2: VAR Advocate
-        advocate_msg = incident_data["deliberation"][0]["message"]
-        yield f"data: {json.dumps({'step': 2, 'agent': 'VARAdvocate', 'role': 'DEFENSE', 'message': advocate_msg})}\n\n"
-        await asyncio.sleep(1.2)
+            node_name = chunk.get("node")
+            node_state = chunk.get("state", {})
 
-        # Step 3: Rules Auditor
-        auditor_msg = incident_data["deliberation"][1]["message"]
-        yield f"data: {json.dumps({'step': 3, 'agent': 'RulesAuditor', 'role': 'PROSECUTION', 'message': auditor_msg})}\n\n"
-        await asyncio.sleep(1.2)
+            if node_name == "triage":
+                spatial = node_state.get("spatial_context", {})
+                yield f"data: {json.dumps({'step': step_idx, 'node': 'triage', 'agent': 'TriageFactAgent', 'role': 'TRIAGE', 'status': 'Spatial telemetry verified on 105x68m grid.', 'spatial': spatial})}\n\n"
+                step_idx += 1
+                await asyncio.sleep(0.3)
 
-        # Step 4: Consistency Evaluator
-        evaluator_msg = incident_data["deliberation"][2]["message"]
-        pdi = incident_data["verdict"]["precedentDeviationIndex"]
-        yield f"data: {json.dumps({'step': 4, 'agent': 'ConsistencyEvaluator', 'role': 'ARBITRATION', 'pdi': pdi, 'message': evaluator_msg})}\n\n"
+            elif node_name == "retriever":
+                precedents = node_state.get("precedents_matched", [])
+                p_name = precedents[0].get("match_name") if precedents else "IFAB Law"
+                yield f"data: {json.dumps({'step': step_idx, 'node': 'retriever', 'agent': 'ZetarisRetriever', 'role': 'RETRIEVAL', 'status': f'Matched Zetaris precedent: {p_name}', 'precedents': precedents})}\n\n"
+                step_idx += 1
+                await asyncio.sleep(0.4)
 
-    return StreamingResponse(event_generator(), media_type="text/event-stream")
+            elif node_name in ("advocate", "auditor", "evaluator"):
+                debate = node_state.get("debate_turns", [])
+                if debate:
+                    turn = debate[-1]
+                    yield f"data: {json.dumps({'step': step_idx, 'node': node_name, 'agent': turn.get('agent'), 'role': turn.get('role'), 'message': turn.get('message'), 'cycle': turn.get('cycle', 1), 'pdi': turn.get('pdi')})}\n\n"
+                    step_idx += 1
+                    await asyncio.sleep(0.4)
+
+            elif node_name == "synthesizer":
+                card = node_state.get("transparency_card", {})
+                verdict = incident_data.get("verdict", {})
+                yield f"data: {json.dumps({'step': step_idx, 'node': 'synthesizer', 'agent': 'KMISynthesizer', 'role': 'SYNTHESIS', 'status': 'COMPLETE', 'transparencyCard': card, 'verdict': verdict})}\n\n"
+                step_idx += 1
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache, no-transform",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
 
 if __name__ == "__main__":
     import uvicorn

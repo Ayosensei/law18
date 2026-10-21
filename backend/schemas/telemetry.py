@@ -5,7 +5,7 @@ Strictly synchronized with frontend/src/types/incident.ts and docs/DESIGN.md.
 """
 
 from typing import List, Optional, Literal, Dict, Any
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 IncidentId = Literal["incident-a", "incident-b", "incident-c"]
 VerdictTier = Literal["CRITICAL_BREACH", "SEVERE_ERROR", "MARGINAL_CONSISTENCY", "COMPLIANT"]
@@ -34,8 +34,7 @@ class TelemetryVector(BaseModel):
     color: str
     dashed: Optional[bool] = False
 
-    class Config:
-        populate_by_name = True
+    model_config = ConfigDict(populate_by_name=True)
 
 class BallTelemetry(BaseModel):
     x: float
