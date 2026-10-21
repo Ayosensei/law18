@@ -132,3 +132,13 @@ def test_api_deliberate_post(client):
     assert res["status"] == "DELIBERATION_COMPLETE"
     assert 85 <= res["pdi"] <= 98
     assert "htmlReport" in res["dossier"]
+
+
+def test_api_deliberate_stream(client):
+    """Verifies progressive SSE streaming of LangGraph deliberation steps."""
+    with client.stream("GET", "/api/deliberate/stream?incident_id=incident-a") as response:
+        assert response.status_code == 200
+        lines = [line for line in response.iter_lines() if line]
+        assert len(lines) >= 4
+        assert any("TriageFactAgent" in l for l in lines)
+        assert any("VARAdvocate" in l for l in lines)
