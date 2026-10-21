@@ -142,3 +142,17 @@ def test_api_deliberate_stream(client):
         assert len(lines) >= 4
         assert any("TriageFactAgent" in l for l in lines)
         assert any("VARAdvocate" in l for l in lines)
+
+
+def test_dossier_export_endpoints(client):
+    """Verifies direct HTML and Markdown UEFA KMI Dossier export routes for judges."""
+    resp_html = client.get("/api/incidents/incident-a/dossier.html")
+    assert resp_html.status_code == 200
+    assert "text/html" in resp_html.headers.get("content-type", "")
+    assert "UEFA / IFAB KMI Regulatory Appeal Dossier" in resp_html.text
+    assert "@media print" in resp_html.text
+
+    resp_md = client.get("/api/incidents/incident-a/dossier.md")
+    assert resp_md.status_code == 200
+    assert "text/plain" in resp_md.headers.get("content-type", "")
+    assert "# UEFA / IFAB KMI REGULATORY APPEAL DOSSIER" in resp_md.text

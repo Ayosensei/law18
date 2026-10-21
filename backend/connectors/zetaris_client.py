@@ -244,27 +244,45 @@ class ZetarisClient:
             return "DOGSO"
         return "HANDBALL_BOX"
 
-    def build_federated_precedent_sql(self, incident_type: str) -> str:
+    def build_federated_precedent_sql(
+        self,
+        incident_type: str,
+        telemetry_filters: Optional[Dict[str, Any]] = None
+    ) -> str:
         """
         Constructs a federated 3-table Lightning SQL query joining:
           1. zetaris_catalog.uefa.uefa_kmi_precedents
           2. zetaris_catalog.ifab.ifab_statutes_catalog
           3. zetaris_catalog.optavision.optavision_biomechanical_telemetry
+        Dynamically incorporates Stage-1 Meterless World Model spatial predicates when provided.
         """
         safe_type = re.sub(r"[^A-Z_]", "", incident_type.upper()) or "HANDBALL_BOX"
+        predicates = [f"p.incident_type = '{safe_type}'"]
+
+        if telemetry_filters:
+            if "in_penalty_box" in telemetry_filters and telemetry_filters["in_penalty_box"] is not None:
+                in_box_int = 1 if telemetry_filters["in_penalty_box"] else 0
+                predicates.append(f"t.in_penalty_box = {in_box_int}")
+            dogso = telemetry_filters.get("dogso_metrics") or {}
+            if safe_type == "DOGSO" and dogso.get("covering_defenders_count", 0) >= 1:
+                predicates.append("t.covering_defenders_min >= 1")
+            elif safe_type == "HIGH_BOOT_HEAD_CONTACT" and float(telemetry_filters.get("ball_elevation_m", 0.0) or 0.0) >= 1.2:
+                predicates.append("t.contact_elevation_m >= 1.20")
+
+        where_clause = " AND ".join(predicates)
         return (
             "SELECT "
             "p.precedent_id, p.incident_type, p.offense_category, p.restart_type, "
             "s.law_number AS law_cited, s.subclause_title, s.verbatim_text, s.mandatory_sanction, "
             "p.competition, p.match_name, p.match_date, p.player_involved, "
             "p.similarity_score, p.official_ruling, p.deviation_analysis, "
-            "t.in_penalty_box, t.contact_elevation_m, t.impact_force_kn, t.distance_to_goal_m "
+            "t.in_penalty_box, t.contact_elevation_m, t.impact_force_kn, t.distance_to_goal_m, t.covering_defenders_min "
             "FROM zetaris_catalog.uefa.uefa_kmi_precedents p "
             "INNER JOIN zetaris_catalog.ifab.ifab_statutes_catalog s "
             "ON p.statute_id = s.statute_id "
             "INNER JOIN zetaris_catalog.optavision.optavision_biomechanical_telemetry t "
             "ON p.precedent_id = t.precedent_id "
-            f"WHERE p.incident_type = '{safe_type}' "
+            f"WHERE {where_clause} "
             "ORDER BY p.similarity_score DESC LIMIT 1;"
         )
 
@@ -284,7 +302,7 @@ class ZetarisClient:
         Executes a federated multi-table join across IFAB statutes, UEFA historical precedents,
         and OptaVision biomechanical telemetry benchmarks.
         """
-        sql = self.build_federated_precedent_sql(incident_type)
+        sql = self.build_federated_precedent_sql(incident_type, telemetry_filters=telemetry_filters)
         return self.query(sql)
 
     def query(self, sql: str) -> Dict[str, Any]:

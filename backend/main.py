@@ -1,8 +1,9 @@
+# backend/main.py
 """
 FastAPI Server for Law18.
-Exposes REST and SSE streaming endpoints for multi-agent officiating audits.
+Exposes REST, SSE streaming, and direct HTML/Markdown B2B Dossier export endpoints
+for multi-agent officiating audits.
 Synchronized with Next.js frontend contracts and Pydantic v2 schemas.
-Upgraded with SSE anti-buffering headers, threadpool execution, and disconnect safety.
 """
 
 import os
@@ -16,7 +17,7 @@ import asyncio
 from typing import Dict, Any, List, Optional
 from fastapi import FastAPI, HTTPException, Query, Body, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, HTMLResponse, PlainTextResponse
 from fastapi.concurrency import run_in_threadpool
 
 from backend.deliberation.graph import DeliberationChamberGraph
@@ -95,6 +96,22 @@ async def list_incidents():
 async def get_incident(incident_id: str):
     """Retrieves full telemetry, precedent, and audit data for a single incident."""
     return await run_in_threadpool(load_incident_json, incident_id)
+
+
+@app.get("/api/incidents/{incident_id}/dossier.html", response_class=HTMLResponse)
+async def export_dossier_html(incident_id: str):
+    """Renders the print-ready UEFA KMI B2B Regulatory Appeal Dossier in HTML."""
+    incident_data = await run_in_threadpool(load_incident_json, incident_id)
+    audit_result = await run_in_threadpool(graph.run_audit, incident_data)
+    return HTMLResponse(content=audit_result["dossier"].get("htmlReport", ""))
+
+
+@app.get("/api/incidents/{incident_id}/dossier.md", response_class=PlainTextResponse)
+async def export_dossier_markdown(incident_id: str):
+    """Renders the formal UEFA KMI B2B Regulatory Appeal Dossier in Markdown."""
+    incident_data = await run_in_threadpool(load_incident_json, incident_id)
+    audit_result = await run_in_threadpool(graph.run_audit, incident_data)
+    return PlainTextResponse(content=audit_result["dossier"].get("markdownReport", ""))
 
 
 @app.post("/api/deliberate")

@@ -118,7 +118,6 @@ def _build_b2b_dossier_reports(
     prec_ruling = prec.get("official_ruling", incident_data.get("precedent", {}).get("officialRuling", "PENALTY_AWARDED"))
     prec_law = prec.get("law_cited", "IFAB Law 12")
 
-    # Determine formal disciplinary sanction recommendation
     inc_lower = str(inc_id).lower()
     if "incident-b" in inc_lower or "fermin" in inc_lower:
         sanction_rec = (
@@ -158,6 +157,8 @@ def _build_b2b_dossier_reports(
     ])
 
     citations_badge_list = ", ".join(pinned_citations) if pinned_citations else prec_law
+    federated_sql_meta = spatial_ctx.get("_zetaris_federated_meta") or {}
+    executed_sql = federated_sql_meta.get("sqlExecuted", raw_dossier.get("zetarisQuery", ""))
 
     markdown_report = f"""# UEFA / IFAB KMI REGULATORY APPEAL DOSSIER
 **Dossier ID:** `{dossier_id}` | **Classification:** `{verdict_tier}` | **PDI Score:** `{pdi_score}%`
@@ -172,6 +173,7 @@ def _build_b2b_dossier_reports(
 - **On-Field Ruling:** {official_call}
 - **Headline Finding:** {verdict.get('headline', 'Statutory Breach Identified')}
 - **Markovian Pinned Citations:** `{citations_badge_list}`
+- **Zetaris Federated SQL:** `{executed_sql}`
 
 ---
 
@@ -271,6 +273,8 @@ def _build_b2b_dossier_reports(
         "markdownReport": markdown_report,
         "htmlReport": html_report,
         "pinnedCitations": pinned_citations,
+        "federatedQueryExecuted": executed_sql,
+        "federatedTables": federated_sql_meta.get("federatedTables", []),
         "precedentParityMatrix": {
             "liveIncident": incident_data.get("shortTitle", inc_id),
             "historicalAnchor": prec_match,
@@ -320,7 +324,7 @@ def retriever_node(state: DeliberationState) -> Dict[str, Any]:
     incident_id = str(state.get("incident_id", "incident-a")).lower()
     match_header = state.get("match_header", {})
     referee = match_header.get("referee", "Unknown Referee")
-    spatial_ctx = state.get("spatial_context", {})
+    spatial_ctx = dict(state.get("spatial_context", {}))
 
     # 1. H-MEM Referee Memory Hydration
     ref_memory = hmem.retrieve_referee_context(referee, incident_id)
@@ -332,6 +336,13 @@ def retriever_node(state: DeliberationState) -> Dict[str, Any]:
 
     retrieved_laws = statutes_res.get("data", [])
     matched_precedents = precedents_res.get("data", [])
+
+    spatial_ctx["_zetaris_federated_meta"] = {
+        "source": precedents_res.get("source"),
+        "sqlExecuted": precedents_res.get("sqlExecuted"),
+        "federatedTables": precedents_res.get("federatedTables", []),
+        "executionTimeMs": precedents_res.get("executionTimeMs", 15)
+    }
 
     prec_name = matched_precedents[0].get("match_name", "Precedent") if matched_precedents else "IFAB Statute"
     trace_entry = {
@@ -349,6 +360,7 @@ def retriever_node(state: DeliberationState) -> Dict[str, Any]:
     trace_logs.append(trace_entry)
 
     return {
+        "spatial_context": spatial_ctx,
         "referee_name": referee,
         "referee_memory": ref_memory,
         "retrieved_laws": retrieved_laws,
@@ -400,7 +412,8 @@ def var_advocate_node(state: DeliberationState) -> Dict[str, Any]:
         ),
         user_prompt=advocate_prompt,
         agent_name="VARAdvocate",
-        incident_id=incident_id
+        incident_id=incident_id,
+        cycle=cycle
     )
 
     advocate_args = list(state.get("advocate_arguments", []))
@@ -470,7 +483,8 @@ def rules_auditor_node(state: DeliberationState) -> Dict[str, Any]:
         ),
         user_prompt=auditor_prompt,
         agent_name="RulesAuditor",
-        incident_id=incident_id
+        incident_id=incident_id,
+        cycle=cycle
     )
 
     extracted_cits = MarkovianDebateState.extract_legal_citations(auditor_res)
@@ -546,7 +560,8 @@ def consistency_evaluator_node(state: DeliberationState) -> Dict[str, Any]:
         ),
         user_prompt=evaluator_prompt,
         agent_name="ConsistencyEvaluator",
-        incident_id=incident_id
+        incident_id=incident_id,
+        cycle=cycle
     )
 
     # 2. Telemetry-Modulated Mathematical PDI Calculation
